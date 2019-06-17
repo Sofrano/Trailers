@@ -1,0 +1,18 @@
+/* 
+  localize.strings
+  MovieDB
+
+  Created by Dmitriy Safarov on 22/04/2019.
+  Copyright © 2019 SimpleCode. All rights reserved.
+*/
+
+"welcome" = "Welcome to the Trailers app! Choose a language that will be a priority when selecting content";
+"error.unknown" = "Unknown error";
+"error.yt.videoKey" = "VideoKey is not specified for video playback.";
+"video" = "Video";
+"addWatchList" = "Add to watchlist";
+"seeAll" = "See all";
+"images" = "Images";
+"cast" = "Cast";
+"videos" = "Videos";
+"productionStatus" = "Production Status";

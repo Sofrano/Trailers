@@ -1,0 +1,18 @@
+/* 
+  localize.strings
+  MovieDB
+
+  Created by Dmitriy Safarov on 22/04/2019.
+  Copyright © 2019 SimpleCode. All rights reserved.
+*/
+
+"welcome" = "Добро пожаловать в приложение Trailers! Выберите язык, который будет являться приоритетным при подборе контента";
+"error.unknown" = "Не известная ошибка";
+"error.yt.videoKey" = "Не указан videoKey для воспроизведения видео";
+"video" = "Видео";
+"addWatchList" = "Добавить в избранное";
+"seeAll" = "Полный список";
+"images" = "Фото";
+"cast" = "В ролях";
+"videos" = "Видео";
+"productionStatus" = "Статус фильма";
