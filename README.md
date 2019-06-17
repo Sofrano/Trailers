@@ -1,8 +1,8 @@
 ## Trailers
 https://www.themoviedb.org/ Swift VIPER demo application
 
-![Alt text](./1.gif?raw=true "Trailers")
-![Alt text](./2.gif?raw=true "Trailers")
+![](gif/1.gif)
+![](gif/2.gif)
 
 ## Requirements
 - macOS 10.14 
