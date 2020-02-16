@@ -1,5 +1,5 @@
 //
-//  GenreListGenreListModuleInput.swift
+//  GenreListModuleInput.swift
 //  MovieDB
 //
 //  Created by Dmitriy Safarov on 30/03/2019.
@@ -8,6 +8,6 @@
 
 protocol GenreListModuleInput: class {
 
-    func configure(with genre: DTOGenre?)
+    func configure(with genre: DTOGenre)
     
 }

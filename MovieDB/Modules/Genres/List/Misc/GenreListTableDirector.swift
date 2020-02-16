@@ -9,27 +9,32 @@
 import Foundation
 import TableKit
 
-class GenreListTableDirector {
-    
-    fileprivate var viewModel: GenreListViewModel!
-    fileprivate var tableKit: TableDirector!
-    
-    public func update(with viewModel: GenreListViewModel,
-                       tableView: UITableView) {
-        self.viewModel = viewModel
-        if tableKit == nil {
-            self.tableKit = TableDirector(tableView: tableView)
-        }
-        configureTableView()
-    }
-    
-    fileprivate func configureTableView() {}
-    
+// due to the fact that I chose a library to work with the table - it limited me
+// to some conventions, because of this, the code below on updating cells looks awful
+
+protocol GenreListTableDirector {
+    func update(with viewModel: GenreListViewModel)
 }
 
 class GenreListDefaultTableDirector: GenreListTableDirector {
     
-    fileprivate override func configureTableView() {
+    private var viewModel: GenreListViewModel!
+    private var tableKit: TableDirector!
+    
+    init(tableView: UITableView) {
+        self.tableKit = TableDirector(tableView: tableView)
+    }
+    
+    public func update(with viewModel: GenreListViewModel) {
+        self.viewModel = viewModel
+        setupRows()
+    }
+    
+}
+
+extension GenreListDefaultTableDirector {
+    
+    private func setupRows() {
         setupPosterRows()
         setupDescriptionRows()
     }
@@ -56,10 +61,6 @@ class GenreListDefaultTableDirector: GenreListTableDirector {
             let titleRow = TableRow<MovieShortDescriptionTableViewCell>(item: movieShortDescritpionViewModel)
                 .on(.click) { _ in
                     movieShortDescritpionViewModel.invoke(action: .click)
-                    //guard let media = self.currentMedia else {
-                    //    return
-                    //}
-                    //self.output?.openMedia(media)
             }
             
             // If the title cell in the table already exist, then you need to reload it, otherwise add to the table
@@ -73,9 +74,8 @@ class GenreListDefaultTableDirector: GenreListTableDirector {
         if let textViewModel = viewModel.textViewModel {
             let overviewRow = TableRow<TextTableViewCell>(item: textViewModel)
                 .on(.configure) { options in
-                    if let cell = options.cell {
-                        cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
-                    }
+                    guard let cell = options.cell else { return }
+                    cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
             }
             
             // If the overview cell in the table already exist, then you need to reload it, otherwise add to the table
@@ -96,61 +96,4 @@ class GenreListDefaultTableDirector: GenreListTableDirector {
 
     }
     
-    private func configureObserveViewModel() {
-//        viewModel.currentPosterIndex?.asObservable().subscribe(onNext: { (value) in
-//
-//        })
-//        .disposed(by: disposeBag)
-    }
-    
-    
-    /*
-    func appendOrReloadVideoContent() {
-        if let media = currentMedia {
-            if let section = tableKit.sections.first {
-                
-                // Cell with movie title, genre and rating
-                let titleRow = TableRow<MovieShortDescriptionTableViewCell>(item: media)
-                    .on(.click) { _ in
-                        guard let media = self.currentMedia else {
-                            return
-                        }
-                        self.output?.openMedia(media)
-                }
-                // Film description box
-                let overviewRow = TableRow<TextTableViewCell>(item: media.overview ?? "")
-                    .on(.configure) { options in
-                        if let cell = options.cell {
-                            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
-                        }
-                }
-                
-                // IndexPathes for reloading rows
-                var indexPathes: [IndexPath] = []
-                
-                // If the title cell in the table already exist, then you need to reload it, otherwise add to the table
-                if tableView.cellForRow(at: IndexPath(item: 1, section: 0)) != nil {
-                    section.replace(rowAt: 1, with: titleRow)
-                    indexPathes.append(IndexPath(row: 1, section: 0))
-                } else {
-                    section.append(row: titleRow)
-                }
-                
-                // If the overview cell in the table already exist, then you need to reload it, otherwise add to the table
-                if tableView.cellForRow(at: IndexPath(item: 2, section: 0)) != nil {
-                    section.replace(rowAt: 2, with: overviewRow)
-                    indexPathes.append(IndexPath(row: 2, section: 0))
-                } else {
-                    section.append(row: overviewRow)
-                }
-                
-                // Determine exactly how to update the table. If cells already were, then reload
-                if tableView.numberOfRows(inSection: 0) >= 3 {
-                    tableView.reloadRows(at: indexPathes, with: .fade)
-                } else {
-                    tableKit.reload()
-                }
-            }
-        }
-        */
 }

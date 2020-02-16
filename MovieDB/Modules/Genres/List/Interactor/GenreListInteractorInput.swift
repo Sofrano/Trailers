@@ -1,5 +1,5 @@
 //
-//  GenreListGenreListInteractorInput.swift
+//  GenreListInteractorInput.swift
 //  MovieDB
 //
 //  Created by Dmitriy Safarov on 30/03/2019.
@@ -10,6 +10,7 @@ import Foundation
 
 protocol GenreListInteractorInput {
 
-    func fetchDiscover(with params: DiscoverMediaParameters)
+    /// Fetch movies
+    func fetchMovies(genreId: GenreID)
     
 }

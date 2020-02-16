@@ -20,7 +20,7 @@ struct DTOMovie: Decodable {
     let budget: Int?
     let genres: [DTOGenre]?
     let homepage: String?
-    let id: MovieID?
+    let id: MovieID
     let imdbId, originalLanguage, originalTitle, overview: String?
     let popularity: Double?
     let posterPath: PosterPath?

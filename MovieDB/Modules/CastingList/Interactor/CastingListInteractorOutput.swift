@@ -10,7 +10,7 @@ import Foundation
 
 protocol CastingListInteractorOutput: class, InteractorOutput {
     
-    /// Movie credits
+    /// Movie casts
     ///
     /// The function will be called by the interactor when the data is received
     /// - parameter credits: The information contains information about the actors who starred

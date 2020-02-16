@@ -12,6 +12,6 @@ import Foundation
 typealias GenreID = UInt
 
 struct DTOGenre: Decodable {
-    let id: GenreID?
+    let id: GenreID
     let name: String?
 }

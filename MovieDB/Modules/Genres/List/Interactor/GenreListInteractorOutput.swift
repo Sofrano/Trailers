@@ -1,5 +1,5 @@
 //
-//  GenreListGenreListInteractorOutput.swift
+//  GenreListInteractorOutput.swift
 //  MovieDB
 //
 //  Created by Dmitriy Safarov on 30/03/2019.
@@ -8,9 +8,12 @@
 
 import Foundation
 
-protocol GenreListInteractorOutput: class {
+protocol GenreListInteractorOutput: class, InteractorOutput {
 
-    func onError(_ error: Error?)
-    func onComplete()
-    func onFetchedDiscoverMedia(_ discoverMedia: DTODiscoverMedia)
+    /// Movies
+    ///
+    /// The function will be called by the interactor when the data is received
+    /// - parameter movies: list of movie
+    func onFetchedMovies(_ movies: [DTOMovie])
+    
 }

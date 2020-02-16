@@ -1,5 +1,5 @@
 //
-//  GenreListGenreListRouterInput.swift
+//  GenreListRouterInput.swift
 //  MovieDB
 //
 //  Created by Dmitriy Safarov on 30/03/2019.
@@ -10,6 +10,7 @@ import Foundation
 
 protocol GenreListRouterInput: AlertRoutable, LoadingRoutable, PresentRoutable {
 
-    func openMedia(_ media: DTOMovie)
+    /// Present a movie detail window
+    func presentMovie(_ movie: DTOMovie)
     
 }

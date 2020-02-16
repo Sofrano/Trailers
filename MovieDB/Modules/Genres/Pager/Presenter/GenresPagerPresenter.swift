@@ -6,6 +6,8 @@
 //  Copyright © 2019 SimpleCode. All rights reserved.
 //
 
+// MARK: - Class
+
 class GenresPagerPresenter {
 
     weak var view: GenresPagerViewInput?
@@ -19,7 +21,11 @@ class GenresPagerPresenter {
     
 }
 
+// MARK: - Module Input
+
 extension GenresPagerPresenter: GenresPagerModuleInput {}
+
+// MARK: - View Output
 
 extension GenresPagerPresenter: GenresPagerViewOutput {
     
@@ -29,6 +35,8 @@ extension GenresPagerPresenter: GenresPagerViewOutput {
     }
     
 }
+
+// MARK: - Interactor Output
 
 extension GenresPagerPresenter: GenresPagerInteractorOutput {
     

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YDj-A2-pUD">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YDj-A2-pUD">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,32 +15,9 @@
                     <view key="view" contentMode="scaleToFill" id="hzq-t2-lvW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="imU-jE-jLJ" customClass="BlurImageView" customModule="MovieDB" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="375" height="447"/>
-                            </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="U6j-dK-zBC">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="D7S-vl-0fb" firstAttribute="bottom" secondItem="U6j-dK-zBC" secondAttribute="bottom" id="W3F-Al-kKB"/>
-                            <constraint firstItem="D7S-vl-0fb" firstAttribute="trailing" secondItem="U6j-dK-zBC" secondAttribute="trailing" id="XpG-CI-Frb"/>
-                            <constraint firstItem="U6j-dK-zBC" firstAttribute="leading" secondItem="D7S-vl-0fb" secondAttribute="leading" id="YfF-HJ-ZnL"/>
-                            <constraint firstItem="D7S-vl-0fb" firstAttribute="bottom" secondItem="imU-jE-jLJ" secondAttribute="bottom" constant="200" id="bvh-fQ-eWr"/>
-                            <constraint firstItem="D7S-vl-0fb" firstAttribute="top" secondItem="imU-jE-jLJ" secondAttribute="top" id="irI-cV-PzI"/>
-                            <constraint firstItem="U6j-dK-zBC" firstAttribute="top" secondItem="D7S-vl-0fb" secondAttribute="top" id="nK4-GM-JAI"/>
-                            <constraint firstItem="imU-jE-jLJ" firstAttribute="leading" secondItem="D7S-vl-0fb" secondAttribute="leading" id="z7Z-Kb-GKT"/>
-                            <constraint firstItem="imU-jE-jLJ" firstAttribute="trailing" secondItem="D7S-vl-0fb" secondAttribute="trailing" id="zZB-I8-4vj"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="D7S-vl-0fb"/>
                     </view>
-                    <connections>
-                        <outlet property="backgroundImageView" destination="imU-jE-jLJ" id="Wvn-9Q-E4Y"/>
-                        <outlet property="tableView" destination="U6j-dK-zBC" id="jBQ-tf-sfw"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fhf-EM-bFE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

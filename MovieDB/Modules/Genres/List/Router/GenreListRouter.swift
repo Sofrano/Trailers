@@ -1,5 +1,5 @@
 //
-//  GenreListGenreListRouter.swift
+//  GenreListRouter.swift
 //  MovieDB
 //
 //  Created by Dmitriy Safarov on 30/03/2019.
@@ -16,11 +16,11 @@ final class GenreListRouter {
 
 extension GenreListRouter: GenreListRouterInput {
     
-    func openMedia(_ media: DTOMovie) {
+    func presentMovie(_ movie: DTOMovie) {
         try? push(storyboard: R.storyboard.movieWallView(),
                   moduleInput: MovieWallModuleInput.self)
             .then({ (input) -> Any? in
-                input.configure(with: media.id ?? 0)
+                input.configure(with: movie.id)
             })
     }
     

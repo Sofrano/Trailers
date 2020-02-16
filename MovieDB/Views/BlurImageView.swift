@@ -21,6 +21,11 @@ class BlurImageView: UIImageView {
     
     // MARK: - Constructors
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupBlur()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupBlur()

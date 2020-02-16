@@ -6,21 +6,32 @@
 //  Copyright © 2019 SimpleCode. All rights reserved.
 //
 
-class EntryPointPresenter: EntryPointModuleInput {
+// MARK: - Class
+
+class EntryPointPresenter {
 
     weak var view: EntryPointViewInput?
     var interactor: EntryPointInteractorInput?
     var router: EntryPointRouterInput?
 
+}
+
+// MARK: - Module Input
+
+extension EntryPointPresenter: EntryPointModuleInput {}
+
+// MARK: - View Output
+
+extension EntryPointPresenter: EntryPointViewOutput {
+    
     func viewIsReady() {
         view?.setupInitialState()
         interactor?.fetchData()
     }
+    
 }
 
-extension EntryPointPresenter: EntryPointViewOutput {
-
-}
+// MARK: - Interactor Output
 
 extension EntryPointPresenter: EntryPointInteractorOutput {
     

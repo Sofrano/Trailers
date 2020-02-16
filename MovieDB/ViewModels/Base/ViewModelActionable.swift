@@ -16,6 +16,8 @@ class BaseViewModel<T> {
     public func invoke(action: T) {
         observeAction(action)
     }
+    
+    @discardableResult
     public func observeAction(_ handler: @escaping (_ action: T) -> ()) -> Self {
         observeAction = handler
         return self

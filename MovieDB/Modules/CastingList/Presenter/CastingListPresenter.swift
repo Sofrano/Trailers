@@ -6,7 +6,7 @@
 //  Copyright © 2019 SimpleCode. All rights reserved.
 //
 
-// MARK: Class
+// MARK: - Class
 
 class CastingListPresenter {
 
@@ -28,7 +28,7 @@ class CastingListPresenter {
     
 }
 
-// MARK: Module Input
+// MARK: - Module Input
 
 extension CastingListPresenter: CastingListModuleInput {
     
@@ -38,7 +38,7 @@ extension CastingListPresenter: CastingListModuleInput {
     
 }
 
-// MARK: View Output
+// MARK: - View Output
 
 extension CastingListPresenter: CastingListViewOutput {
 
@@ -49,7 +49,7 @@ extension CastingListPresenter: CastingListViewOutput {
     
 }
 
-// MARK: Interactor Output
+// MARK: - Interactor Output
 
 extension CastingListPresenter: CastingListInteractorOutput {
    

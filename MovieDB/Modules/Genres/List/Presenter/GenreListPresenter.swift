@@ -1,73 +1,41 @@
 //
-//  GenreListGenreListPresenter.swift
+//  GenreListPresenter.swift
 //  MovieDB
 //
 //  Created by Dmitriy Safarov on 30/03/2019.
 //  Copyright © 2019 SimpleCode. All rights reserved.
-//
-import RxSwift
 
-class GenreListPresenter: GenreListModuleInput {
+
+import Foundation
+
+// MARK: - Class
+
+class GenreListPresenter {
 
     weak var view: GenreListViewInput?
     var interactor: GenreListInteractorInput?
     var router: GenreListRouterInput?
-
-    private var genre: DTOGenre?
-    private var params = DiscoverMediaParameters()
+    private var genre: DTOGenre!
+    private lazy var vmCreator: GenreListViewModelCreator = GenreListViewModelDefault(output: self)
     
     private func fetchDiscoverMedia() {
-        params.genres = [genre?.id].compactMap { $0 }
         router?.showLoading()
-        interactor?.fetchDiscover(with: params)
+        interactor?.fetchMovies(genreId: genre.id)
     }
     
-    func configure(with genre: DTOGenre?) {
+}
+
+// MARK: - Module Input
+
+extension GenreListPresenter: GenreListModuleInput {
+    
+    func configure(with genre: DTOGenre) {
         self.genre = genre
     }
     
-    func createViewModel(movies: [DTOMovie]) -> GenreListViewModel {
-        let posters = movies.map { $0.posterPath?.url(size: EPosterSize.w342) }.compactMap { $0 }
-        let imageCollectionViewModel = ImageCollectionViewModel(imageURLs: posters)
-        let model = GenreListViewModel(imageCollectionViewModel: imageCollectionViewModel)
-        imageCollectionViewModel.observeAction { (action) in
-            switch(action) {
-            case .selectItem(let index):
-                let movie = movies[index]
-                model.currentPosterIndex = index
-                model.movieShortDescriptionViewModel = self.createMovieShortViewModel(movie: movie)
-                model.textViewModel = self.createTextViewModel(movie: movie)
-                self.view?.update(with: model)
-            }
-        }
-        imageCollectionViewModel.invoke(action: .selectItem(index: 0))
-        return model
-    }
-    
-    func createTextViewModel(movie: DTOMovie) -> TextCellViewModel {
-        let textViewModel = TextCellViewModel(text: movie.overview ?? "")
-        return textViewModel
-    }
-    
-    func createMovieShortViewModel(movie: DTOMovie) -> MovieShortDescriptionCellViewModel {
-        let date = Date(fromString: movie.releaseDate ?? "", format: .isoDate)
-        let year = date?.toString(format: .isoYear) ?? ""
-        let genreNames = ConfigurationManager.genres.compactMap { (movie.genreIds?.contains($0.id ?? 0) ?? false) ? $0.name?.uppercaseFirstLetter() : nil }.joined(separator: ", ")
-        
-        let model = MovieShortDescriptionCellViewModel(title: movie.title ?? "",
-                                                       year: year,
-                                                       genreNames: genreNames,
-                                                       voteAverage: movie.voteAverage ?? 0)
-            .observeAction { (actions) in
-                switch actions {
-                case .click:
-                    self.router?.openMedia(movie)
-                }
-        }
-        
-        return model
-    }
 }
+
+// MARK: - View Output
 
 extension GenreListPresenter: GenreListViewOutput {
     
@@ -76,25 +44,29 @@ extension GenreListPresenter: GenreListViewOutput {
         fetchDiscoverMedia()
     }
     
-    func openMedia(_ media: DTOMovie) {
-        router?.openMedia(media)
+}
+
+// MARK: - ViewModel Output
+
+extension GenreListPresenter: GenreListViewModelOutput {
+    
+    func stateChanged(viewModel: GenreListViewModel) {
+        view?.update(with: viewModel)
+    }
+    
+    func openMovie(_ movie: DTOMovie) {
+        router?.presentMovie(movie)
     }
     
 }
 
+// MARK: - Interactor Output
+
 extension GenreListPresenter: GenreListInteractorOutput {
     
-    func onFetchedDiscoverMedia(_ discoverMedia: DTODiscoverMedia) {
-        view?.update(with: createViewModel(movies: discoverMedia.results ?? []))
-        //view?.update(with: discoverMedia.results ?? [])
+    func onFetchedMovies(_ movies: [DTOMovie]) {
+        let viewModel = vmCreator.createViewModel(movies: movies)
+        view?.update(with: viewModel)
     }
     
-    func onError(_ error: Error?) {
-        router?.showAlert(withMessage: error?.localizedDescription ?? R.string.localizable.errorUnknown())
-    }
-    
-    func onComplete() {
-        router?.hideLoading()
-    }
-
 }

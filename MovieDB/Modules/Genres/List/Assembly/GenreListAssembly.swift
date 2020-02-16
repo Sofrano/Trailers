@@ -1,5 +1,5 @@
 //
-//  GenreListGenreListAssembly.swift
+//  GenreListAssemblyContainer.swift
 //  MovieDB
 //
 //  Created by Dmitriy Safarov on 30/03/2019.
