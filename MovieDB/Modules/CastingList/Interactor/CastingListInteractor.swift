@@ -11,11 +11,15 @@ import PromiseKit
 class CastingListInteractor: CastingListInteractorInput {
 
     weak var output: CastingListInteractorOutput?
-    let service = MoviesNetworkService()
+    private let service = MoviesNetworkService()
     
-    func fetchCredits(for movieId: MovieID) {
+    func fetchCasts(for movieId: MovieID) {
         service.getCredits(for: movieId)
-            .done { self.output?.onFetchedCredits($0) }
+            .done { (credits) in
+                /// Filter only the necessary data
+                let casts = (credits.cast ?? []).filter { $0.profilePath != nil }
+                self.output?.onFetchedCasts(casts)
+            }
             .catch { self.output?.onError($0) }
             .finally { self.output?.onComplete() }
     }

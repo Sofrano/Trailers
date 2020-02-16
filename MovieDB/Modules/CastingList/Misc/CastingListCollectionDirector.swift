@@ -9,10 +9,14 @@
 import Foundation
 import UIKit
 
-class CastingListCollectionDirector: NSObject {
+protocol CastingListCollectionDirector {
+    func update(with viewModel: CastingListViewModel, collectionView: UICollectionView)
+}
+
+class CastingListDefaultCollectionDirector: NSObject, CastingListCollectionDirector {
     
-    fileprivate var viewModel: CastingListViewModel!
-    fileprivate var collectionView: UICollectionView!
+    private var viewModel: CastingListViewModel!
+    private var collectionView: UICollectionView!
     
     public func update(with viewModel: CastingListViewModel,
                        collectionView: UICollectionView) {
@@ -21,13 +25,11 @@ class CastingListCollectionDirector: NSObject {
         configureCollectionView()
     }
     
-    fileprivate func configureCollectionView() {}
-    
 }
 
-class CastingListDefaultCollectionDirector: CastingListCollectionDirector {
+extension CastingListDefaultCollectionDirector {
     
-    fileprivate override func configureCollectionView() {
+    private func configureCollectionView() {
         collectionView.backgroundColor = UIColor.clear
         collectionView.contentInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         collectionView.delegate = self
@@ -47,6 +49,7 @@ extension CastingListDefaultCollectionDirector: UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        // Configure cell
         if let castCell = cell as? CastCollectionViewCell,
             let castViewModel = viewModel.castViewModels[safe: indexPath.row] {
             

@@ -38,7 +38,7 @@ class GenreListDefaultTableDirector: GenreListTableDirector {
         guard tableKit.sections.count == 0 else { return }
         tableKit.clear()
         let section = TableSection(rows: [])
-        section.headerHeight = 0.1
+        section.headerHeight = 0.1 
         let posterRow = TableRow<PagerTableViewCell>(item: viewModel.imageCollectionViewModel)
         section.append(row: posterRow)
         tableKit.append(section: section)

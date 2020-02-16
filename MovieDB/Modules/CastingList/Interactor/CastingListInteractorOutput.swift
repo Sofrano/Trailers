@@ -8,9 +8,12 @@
 
 import Foundation
 
-protocol CastingListInteractorOutput: class {
-
-    func onError(_ error: Error?)
-    func onComplete()
-    func onFetchedCredits(_ credits: DTOCredits)
+protocol CastingListInteractorOutput: class, InteractorOutput {
+    
+    /// Movie credits
+    ///
+    /// The function will be called by the interactor when the data is received
+    /// - parameter credits: The information contains information about the actors who starred
+    /// in the film and the production team
+    func onFetchedCasts(_ casts: [DTOCast])
 }

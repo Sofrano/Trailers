@@ -10,6 +10,6 @@ import Foundation
 
 protocol EntryPointRouterInput: AlertRoutable, LoadingRoutable, PresentRoutable {
     
-    func openGenresList()
+    func presentGenreList()
     
 }

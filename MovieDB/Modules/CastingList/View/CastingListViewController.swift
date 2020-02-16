@@ -16,17 +16,16 @@ class CastingListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Variables
-    
-    private var castings: [DTOCast] = []
+
     var output: CastingListViewOutput?
-    private var collectionDirector = CastingListDefaultCollectionDirector()
+    private var collectionDirector: CastingListCollectionDirector = CastingListDefaultCollectionDirector()
     
     // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Casting"
         output?.viewIsReady()
-        self.title = "Casting"
     }
 
 }
@@ -34,16 +33,12 @@ class CastingListViewController: UIViewController {
 extension CastingListViewController: CastingListViewInput {
 
     func setupInitialState() {
-        self.view.backgroundColor = UIColor.appColor.behance
-    }
-    
-    func update(with casts: [DTOCast]) {
-        self.castings = casts
-        collectionView.reloadData()
+        view.backgroundColor = UIColor.appColor.behance
     }
     
     func update(with viewModel: CastingListViewModel) {
-        collectionDirector.update(with: viewModel, collectionView: self.collectionView)
+        collectionDirector.update(with: viewModel,
+                                  collectionView: collectionView)
     }
     
 }

@@ -10,4 +10,5 @@ protocol EntryPointViewInput: class {
 
     func updateProgress(_ progress: Float)
     func setupInitialState()
+    
 }

@@ -58,6 +58,7 @@ class PagerTableViewCell: UITableViewCell, ConfigurableCell {
                            height: configuration.height,
                            slidingInterval: configuration.slidingInterval)
         }
+        pagerView.reloadData()
     }
     
     /**
@@ -82,6 +83,7 @@ class PagerTableViewCell: UITableViewCell, ConfigurableCell {
             pagerView.automaticSlidingInterval = interval
         }
         pagerView.transformer = FSPagerViewTransformer(type: transformerType)
+        
     }
 
     // MARK: - Private Functions

@@ -10,6 +10,8 @@ import Foundation
 
 protocol EntryPointInteractorInput {
 
+    /// We request all the necessary data - configuration, genres
+    /// and give data on the progress of loading
     func fetchData()
     
 }

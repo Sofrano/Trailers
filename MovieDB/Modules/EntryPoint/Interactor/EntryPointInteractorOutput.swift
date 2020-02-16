@@ -8,12 +8,31 @@
 
 import Foundation
 
-protocol EntryPointInteractorOutput: class {
-
-    func onError(_ error: Error?)
-    func onComplete()
+protocol EntryPointInteractorOutput: class, InteractorOutput {
+    
+    /// Service configuration.
+    ///
+    /// The function will be called by the interactor when the data is received
+    /// - parameter configuration: system configuration data structure
     func onFetchedConfiguration(_ configuration: DTOConfiguration)
+    
+    /// List of available genres
+    ///
+    /// The function will be called by the interactor when the data is received
+    /// - parameter genres: List of available genres
     func onFetchedGenres(_ genres: [DTOGenre])
+    
+    /// Informing about the current progress of data loading
+    ///
+    ///
+    /// The function will be called by the interactor when the data is received
+    /// - parameter progress: The value of progress. Values from 0.0 to 1.0 are used
     func onChangeProgress(_ progress: Float)
     
+}
+
+// Optional functions
+extension EntryPointInteractorOutput {
+    func onFetchedConfiguration(_ configuration: DTOConfiguration) {}
+    func onFetchedGenres(_ genres: [DTOGenre]) {}
 }

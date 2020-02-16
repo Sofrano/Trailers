@@ -10,7 +10,7 @@ use_frameworks!
 pod 'XLPagerTabStrip'
 pod 'R.swift'
 pod 'LightRoute'
-pod 'Swinject'
+pod 'Swinject', '2.6'
 pod 'SwinjectStoryboard'
 pod 'TableKit'
 pod 'SwiftLint'

@@ -11,99 +11,84 @@ import UIKit
 struct R: Rswift.Validatable {
   fileprivate static let applicationLocale = hostingBundle.preferredLocalizations.first.flatMap(Locale.init) ?? Locale.current
   fileprivate static let hostingBundle = Bundle(for: R.Class.self)
-  
+
+  /// Find first language and bundle for which the table exists
+  fileprivate static func localeBundle(tableName: String, preferredLanguages: [String]) -> (Foundation.Locale, Foundation.Bundle)? {
+    // Filter preferredLanguages to localizations, use first locale
+    var languages = preferredLanguages
+      .map(Locale.init)
+      .prefix(1)
+      .flatMap { locale -> [String] in
+        if hostingBundle.localizations.contains(locale.identifier) {
+          if let language = locale.languageCode, hostingBundle.localizations.contains(language) {
+            return [locale.identifier, language]
+          } else {
+            return [locale.identifier]
+          }
+        } else if let language = locale.languageCode, hostingBundle.localizations.contains(language) {
+          return [language]
+        } else {
+          return []
+        }
+      }
+
+    // If there's no languages, use development language as backstop
+    if languages.isEmpty {
+      if let developmentLocalization = hostingBundle.developmentLocalization {
+        languages = [developmentLocalization]
+      }
+    } else {
+      // Insert Base as second item (between locale identifier and languageCode)
+      languages.insert("Base", at: 1)
+
+      // Add development language as backstop
+      if let developmentLocalization = hostingBundle.developmentLocalization {
+        languages.append(developmentLocalization)
+      }
+    }
+
+    // Find first language for which table exists
+    // Note: key might not exist in chosen language (in that case, key will be shown)
+    for language in languages {
+      if let lproj = hostingBundle.url(forResource: language, withExtension: "lproj"),
+         let lbundle = Bundle(url: lproj)
+      {
+        let strings = lbundle.url(forResource: tableName, withExtension: "strings")
+        let stringsdict = lbundle.url(forResource: tableName, withExtension: "stringsdict")
+
+        if strings != nil || stringsdict != nil {
+          return (Locale(identifier: language), lbundle)
+        }
+      }
+    }
+
+    // If table is available in main bundle, don't look for localized resources
+    let strings = hostingBundle.url(forResource: tableName, withExtension: "strings", subdirectory: nil, localization: nil)
+    let stringsdict = hostingBundle.url(forResource: tableName, withExtension: "stringsdict", subdirectory: nil, localization: nil)
+
+    if strings != nil || stringsdict != nil {
+      return (applicationLocale, hostingBundle)
+    }
+
+    // If table is not found for requested languages, key will be shown
+    return nil
+  }
+
+  /// Load string from Info.plist file
+  fileprivate static func infoPlistString(path: [String], key: String) -> String? {
+    var dict = hostingBundle.infoDictionary
+    for step in path {
+      guard let obj = dict?[step] as? [String: Any] else { return nil }
+      dict = obj
+    }
+    return dict?[key] as? String
+  }
+
   static func validate() throws {
     try intern.validate()
   }
-  
-  /// This `R.image` struct is generated, and contains static references to 6 images.
-  struct image {
-    /// Image `add`.
-    static let add = Rswift.ImageResource(bundle: R.hostingBundle, name: "add")
-    /// Image `bell`.
-    static let bell = Rswift.ImageResource(bundle: R.hostingBundle, name: "bell")
-    /// Image `icon`.
-    static let icon = Rswift.ImageResource(bundle: R.hostingBundle, name: "icon")
-    /// Image `openWeb`.
-    static let openWeb = Rswift.ImageResource(bundle: R.hostingBundle, name: "openWeb")
-    /// Image `play`.
-    static let play = Rswift.ImageResource(bundle: R.hostingBundle, name: "play")
-    /// Image `share`.
-    static let share = Rswift.ImageResource(bundle: R.hostingBundle, name: "share")
-    
-    /// `UIImage(named: "add", bundle: ..., traitCollection: ...)`
-    static func add(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.add, compatibleWith: traitCollection)
-    }
-    
-    /// `UIImage(named: "bell", bundle: ..., traitCollection: ...)`
-    static func bell(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.bell, compatibleWith: traitCollection)
-    }
-    
-    /// `UIImage(named: "icon", bundle: ..., traitCollection: ...)`
-    static func icon(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.icon, compatibleWith: traitCollection)
-    }
-    
-    /// `UIImage(named: "openWeb", bundle: ..., traitCollection: ...)`
-    static func openWeb(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.openWeb, compatibleWith: traitCollection)
-    }
-    
-    /// `UIImage(named: "play", bundle: ..., traitCollection: ...)`
-    static func play(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.play, compatibleWith: traitCollection)
-    }
-    
-    /// `UIImage(named: "share", bundle: ..., traitCollection: ...)`
-    static func share(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.share, compatibleWith: traitCollection)
-    }
-    
-    fileprivate init() {}
-  }
-  
-  /// This `R.nib` struct is generated, and contains static references to 2 nibs.
-  struct nib {
-    /// Nib `LanguageTableViewCell`.
-    static let languageTableViewCell = _R.nib._LanguageTableViewCell()
-    /// Nib `PagerTableViewCell`.
-    static let pagerTableViewCell = _R.nib._PagerTableViewCell()
-    
-    /// `UINib(name: "LanguageTableViewCell", in: bundle)`
-    @available(*, deprecated, message: "Use UINib(resource: R.nib.languageTableViewCell) instead")
-    static func languageTableViewCell(_: Void = ()) -> UIKit.UINib {
-      return UIKit.UINib(resource: R.nib.languageTableViewCell)
-    }
-    
-    /// `UINib(name: "PagerTableViewCell", in: bundle)`
-    @available(*, deprecated, message: "Use UINib(resource: R.nib.pagerTableViewCell) instead")
-    static func pagerTableViewCell(_: Void = ()) -> UIKit.UINib {
-      return UIKit.UINib(resource: R.nib.pagerTableViewCell)
-    }
-    
-    static func languageTableViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LanguageTableViewCell? {
-      return R.nib.languageTableViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LanguageTableViewCell
-    }
-    
-    static func pagerTableViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> PagerTableViewCell? {
-      return R.nib.pagerTableViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? PagerTableViewCell
-    }
-    
-    fileprivate init() {}
-  }
-  
-  /// This `R.reuseIdentifier` struct is generated, and contains static references to 2 reuse identifiers.
-  struct reuseIdentifier {
-    /// Reuse identifier `LanguageTableViewCell`.
-    static let languageTableViewCell: Rswift.ReuseIdentifier<LanguageTableViewCell> = Rswift.ReuseIdentifier(identifier: "LanguageTableViewCell")
-    /// Reuse identifier `PagerTableViewCell`.
-    static let pagerTableViewCell: Rswift.ReuseIdentifier<PagerTableViewCell> = Rswift.ReuseIdentifier(identifier: "PagerTableViewCell")
-    
-    fileprivate init() {}
-  }
-  
+
+  #if os(iOS) || os(tvOS)
   /// This `R.storyboard` struct is generated, and contains static references to 12 storyboards.
   struct storyboard {
     /// Storyboard `CastingListView`.
@@ -130,488 +115,751 @@ struct R: Rswift.Validatable {
     static let videoListView = _R.storyboard.videoListView()
     /// Storyboard `YTView`.
     static let ytView = _R.storyboard.ytView()
-    
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "CastingListView", bundle: ...)`
     static func castingListView(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.castingListView)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "EntryPointView", bundle: ...)`
     static func entryPointView(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.entryPointView)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "GenreListView", bundle: ...)`
     static func genreListView(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.genreListView)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "GenresPagerView", bundle: ...)`
     static func genresPagerView(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.genresPagerView)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "ImageListView", bundle: ...)`
     static func imageListView(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.imageListView)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "LanguageView", bundle: ...)`
     static func languageView(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.languageView)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "LaunchScreen", bundle: ...)`
     static func launchScreen(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.launchScreen)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "Main", bundle: ...)`
     static func main(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.main)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "MovieWallView", bundle: ...)`
     static func movieWallView(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.movieWallView)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "TextListView", bundle: ...)`
     static func textListView(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.textListView)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "VideoListView", bundle: ...)`
     static func videoListView(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.videoListView)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "YTView", bundle: ...)`
     static func ytView(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.ytView)
     }
-    
+    #endif
+
     fileprivate init() {}
   }
-  
+  #endif
+
+  /// This `R.image` struct is generated, and contains static references to 6 images.
+  struct image {
+    /// Image `add`.
+    static let add = Rswift.ImageResource(bundle: R.hostingBundle, name: "add")
+    /// Image `bell`.
+    static let bell = Rswift.ImageResource(bundle: R.hostingBundle, name: "bell")
+    /// Image `icon`.
+    static let icon = Rswift.ImageResource(bundle: R.hostingBundle, name: "icon")
+    /// Image `openWeb`.
+    static let openWeb = Rswift.ImageResource(bundle: R.hostingBundle, name: "openWeb")
+    /// Image `play`.
+    static let play = Rswift.ImageResource(bundle: R.hostingBundle, name: "play")
+    /// Image `share`.
+    static let share = Rswift.ImageResource(bundle: R.hostingBundle, name: "share")
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "add", bundle: ..., traitCollection: ...)`
+    static func add(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.add, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "bell", bundle: ..., traitCollection: ...)`
+    static func bell(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.bell, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "icon", bundle: ..., traitCollection: ...)`
+    static func icon(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.icon, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "openWeb", bundle: ..., traitCollection: ...)`
+    static func openWeb(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.openWeb, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "play", bundle: ..., traitCollection: ...)`
+    static func play(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.play, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "share", bundle: ..., traitCollection: ...)`
+    static func share(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.share, compatibleWith: traitCollection)
+    }
+    #endif
+
+    fileprivate init() {}
+  }
+
+  /// This `R.nib` struct is generated, and contains static references to 2 nibs.
+  struct nib {
+    /// Nib `LanguageTableViewCell`.
+    static let languageTableViewCell = _R.nib._LanguageTableViewCell()
+    /// Nib `PagerTableViewCell`.
+    static let pagerTableViewCell = _R.nib._PagerTableViewCell()
+
+    #if os(iOS) || os(tvOS)
+    /// `UINib(name: "LanguageTableViewCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.languageTableViewCell) instead")
+    static func languageTableViewCell(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.languageTableViewCell)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UINib(name: "PagerTableViewCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.pagerTableViewCell) instead")
+    static func pagerTableViewCell(_: Void = ()) -> UIKit.UINib {
+      return UIKit.UINib(resource: R.nib.pagerTableViewCell)
+    }
+    #endif
+
+    static func languageTableViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LanguageTableViewCell? {
+      return R.nib.languageTableViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LanguageTableViewCell
+    }
+
+    static func pagerTableViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> PagerTableViewCell? {
+      return R.nib.pagerTableViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? PagerTableViewCell
+    }
+
+    fileprivate init() {}
+  }
+
+  /// This `R.reuseIdentifier` struct is generated, and contains static references to 2 reuse identifiers.
+  struct reuseIdentifier {
+    /// Reuse identifier `LanguageTableViewCell`.
+    static let languageTableViewCell: Rswift.ReuseIdentifier<LanguageTableViewCell> = Rswift.ReuseIdentifier(identifier: "LanguageTableViewCell")
+    /// Reuse identifier `PagerTableViewCell`.
+    static let pagerTableViewCell: Rswift.ReuseIdentifier<PagerTableViewCell> = Rswift.ReuseIdentifier(identifier: "PagerTableViewCell")
+
+    fileprivate init() {}
+  }
+
   /// This `R.string` struct is generated, and contains static references to 1 localization tables.
   struct string {
     /// This `R.string.localizable` struct is generated, and contains static references to 10 localization keys.
     struct localizable {
       /// en translation: Add to watchlist
-      /// 
+      ///
       /// Locales: en, ru
       static let addWatchList = Rswift.StringResource(key: "addWatchList", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
       /// en translation: Cast
-      /// 
+      ///
       /// Locales: en, ru
       static let cast = Rswift.StringResource(key: "cast", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
       /// en translation: Images
-      /// 
+      ///
       /// Locales: en, ru
       static let images = Rswift.StringResource(key: "images", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
       /// en translation: Production Status
-      /// 
+      ///
       /// Locales: en, ru
       static let productionStatus = Rswift.StringResource(key: "productionStatus", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
       /// en translation: See all
-      /// 
+      ///
       /// Locales: en, ru
       static let seeAll = Rswift.StringResource(key: "seeAll", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
       /// en translation: Unknown error
-      /// 
+      ///
       /// Locales: en, ru
       static let errorUnknown = Rswift.StringResource(key: "error.unknown", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
       /// en translation: Video
-      /// 
+      ///
       /// Locales: en, ru
       static let video = Rswift.StringResource(key: "video", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
       /// en translation: VideoKey is not specified for video playback.
-      /// 
+      ///
       /// Locales: en, ru
       static let errorYtVideoKey = Rswift.StringResource(key: "error.yt.videoKey", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
       /// en translation: Videos
-      /// 
+      ///
       /// Locales: en, ru
       static let videos = Rswift.StringResource(key: "videos", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
       /// en translation: Welcome to the Trailers app! Choose a language that will be a priority when selecting content
-      /// 
+      ///
       /// Locales: en, ru
       static let welcome = Rswift.StringResource(key: "welcome", tableName: "Localizable", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
-      
+
       /// en translation: Add to watchlist
-      /// 
+      ///
       /// Locales: en, ru
-      static func addWatchList(_: Void = ()) -> String {
-        return NSLocalizedString("addWatchList", bundle: R.hostingBundle, comment: "")
+      static func addWatchList(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("addWatchList", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "addWatchList"
+        }
+
+        return NSLocalizedString("addWatchList", bundle: bundle, comment: "")
       }
-      
+
       /// en translation: Cast
-      /// 
+      ///
       /// Locales: en, ru
-      static func cast(_: Void = ()) -> String {
-        return NSLocalizedString("cast", bundle: R.hostingBundle, comment: "")
+      static func cast(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("cast", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "cast"
+        }
+
+        return NSLocalizedString("cast", bundle: bundle, comment: "")
       }
-      
+
       /// en translation: Images
-      /// 
+      ///
       /// Locales: en, ru
-      static func images(_: Void = ()) -> String {
-        return NSLocalizedString("images", bundle: R.hostingBundle, comment: "")
+      static func images(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("images", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "images"
+        }
+
+        return NSLocalizedString("images", bundle: bundle, comment: "")
       }
-      
+
       /// en translation: Production Status
-      /// 
+      ///
       /// Locales: en, ru
-      static func productionStatus(_: Void = ()) -> String {
-        return NSLocalizedString("productionStatus", bundle: R.hostingBundle, comment: "")
+      static func productionStatus(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("productionStatus", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "productionStatus"
+        }
+
+        return NSLocalizedString("productionStatus", bundle: bundle, comment: "")
       }
-      
+
       /// en translation: See all
-      /// 
+      ///
       /// Locales: en, ru
-      static func seeAll(_: Void = ()) -> String {
-        return NSLocalizedString("seeAll", bundle: R.hostingBundle, comment: "")
+      static func seeAll(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("seeAll", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "seeAll"
+        }
+
+        return NSLocalizedString("seeAll", bundle: bundle, comment: "")
       }
-      
+
       /// en translation: Unknown error
-      /// 
+      ///
       /// Locales: en, ru
-      static func errorUnknown(_: Void = ()) -> String {
-        return NSLocalizedString("error.unknown", bundle: R.hostingBundle, comment: "")
+      static func errorUnknown(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("error.unknown", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "error.unknown"
+        }
+
+        return NSLocalizedString("error.unknown", bundle: bundle, comment: "")
       }
-      
+
       /// en translation: Video
-      /// 
+      ///
       /// Locales: en, ru
-      static func video(_: Void = ()) -> String {
-        return NSLocalizedString("video", bundle: R.hostingBundle, comment: "")
+      static func video(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("video", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "video"
+        }
+
+        return NSLocalizedString("video", bundle: bundle, comment: "")
       }
-      
+
       /// en translation: VideoKey is not specified for video playback.
-      /// 
+      ///
       /// Locales: en, ru
-      static func errorYtVideoKey(_: Void = ()) -> String {
-        return NSLocalizedString("error.yt.videoKey", bundle: R.hostingBundle, comment: "")
+      static func errorYtVideoKey(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("error.yt.videoKey", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "error.yt.videoKey"
+        }
+
+        return NSLocalizedString("error.yt.videoKey", bundle: bundle, comment: "")
       }
-      
+
       /// en translation: Videos
-      /// 
+      ///
       /// Locales: en, ru
-      static func videos(_: Void = ()) -> String {
-        return NSLocalizedString("videos", bundle: R.hostingBundle, comment: "")
+      static func videos(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("videos", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "videos"
+        }
+
+        return NSLocalizedString("videos", bundle: bundle, comment: "")
       }
-      
+
       /// en translation: Welcome to the Trailers app! Choose a language that will be a priority when selecting content
-      /// 
+      ///
       /// Locales: en, ru
-      static func welcome(_: Void = ()) -> String {
-        return NSLocalizedString("welcome", bundle: R.hostingBundle, comment: "")
+      static func welcome(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("welcome", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "welcome"
+        }
+
+        return NSLocalizedString("welcome", bundle: bundle, comment: "")
       }
-      
+
       fileprivate init() {}
     }
-    
+
     fileprivate init() {}
   }
-  
+
   fileprivate struct intern: Rswift.Validatable {
     fileprivate static func validate() throws {
       try _R.validate()
     }
-    
+
     fileprivate init() {}
   }
-  
+
   fileprivate class Class {}
-  
+
   fileprivate init() {}
 }
 
 struct _R: Rswift.Validatable {
   static func validate() throws {
+    #if os(iOS) || os(tvOS)
     try storyboard.validate()
+    #endif
   }
-  
+
+  #if os(iOS) || os(tvOS)
   struct nib {
     struct _LanguageTableViewCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType {
       typealias ReusableType = LanguageTableViewCell
-      
+
       let bundle = R.hostingBundle
       let identifier = "LanguageTableViewCell"
       let name = "LanguageTableViewCell"
-      
+
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> LanguageTableViewCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? LanguageTableViewCell
       }
-      
+
       fileprivate init() {}
     }
-    
+
     struct _PagerTableViewCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType {
       typealias ReusableType = PagerTableViewCell
-      
+
       let bundle = R.hostingBundle
       let identifier = "PagerTableViewCell"
       let name = "PagerTableViewCell"
-      
+
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> PagerTableViewCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? PagerTableViewCell
       }
-      
+
       fileprivate init() {}
     }
-    
+
     fileprivate init() {}
   }
-  
+  #endif
+
+  #if os(iOS) || os(tvOS)
   struct storyboard: Rswift.Validatable {
     static func validate() throws {
+      #if os(iOS) || os(tvOS)
       try castingListView.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try entryPointView.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try genreListView.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try genresPagerView.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try imageListView.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try languageView.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try launchScreen.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try main.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try movieWallView.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try textListView.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try videoListView.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try ytView.validate()
+      #endif
     }
-    
+
+    #if os(iOS) || os(tvOS)
     struct castingListView: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = CastingListViewController
-      
+
       let bundle = R.hostingBundle
       let castingListViewController = StoryboardViewControllerResource<CastingListViewController>(identifier: "CastingListViewController")
       let name = "CastingListView"
-      
+
       func castingListViewController(_: Void = ()) -> CastingListViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: castingListViewController)
       }
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.castingListView().castingListViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'castingListViewController' could not be loaded from storyboard 'CastingListView' as 'CastingListViewController'.") }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct entryPointView: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = EntryPointViewController
-      
+
       let bundle = R.hostingBundle
       let entryPointViewController = StoryboardViewControllerResource<EntryPointViewController>(identifier: "EntryPointViewController")
       let name = "EntryPointView"
-      
+
       func entryPointViewController(_: Void = ()) -> EntryPointViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: entryPointViewController)
       }
-      
+
       static func validate() throws {
         if UIKit.UIImage(named: "icon", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'icon' is used in storyboard 'EntryPointView', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.entryPointView().entryPointViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'entryPointViewController' could not be loaded from storyboard 'EntryPointView' as 'EntryPointViewController'.") }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct genreListView: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = GenreListViewController
-      
+
       let bundle = R.hostingBundle
       let genreListViewController = StoryboardViewControllerResource<GenreListViewController>(identifier: "GenreListViewController")
       let name = "GenreListView"
-      
+
       func genreListViewController(_: Void = ()) -> GenreListViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: genreListViewController)
       }
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.genreListView().genreListViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'genreListViewController' could not be loaded from storyboard 'GenreListView' as 'GenreListViewController'.") }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct genresPagerView: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = UIKit.UINavigationController
-      
+
       let bundle = R.hostingBundle
       let genresPagerViewController = StoryboardViewControllerResource<GenresPagerViewController>(identifier: "GenresPagerViewController")
       let name = "GenresPagerView"
-      
+
       func genresPagerViewController(_: Void = ()) -> GenresPagerViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: genresPagerViewController)
       }
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.genresPagerView().genresPagerViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'genresPagerViewController' could not be loaded from storyboard 'GenresPagerView' as 'GenresPagerViewController'.") }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct imageListView: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = ImageListViewController
-      
+
       let bundle = R.hostingBundle
       let imageListViewController = StoryboardViewControllerResource<ImageListViewController>(identifier: "ImageListViewController")
       let name = "ImageListView"
-      
+
       func imageListViewController(_: Void = ()) -> ImageListViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: imageListViewController)
       }
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.imageListView().imageListViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'imageListViewController' could not be loaded from storyboard 'ImageListView' as 'ImageListViewController'.") }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct languageView: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = LanguageViewController
-      
+
       let bundle = R.hostingBundle
       let languageViewController = StoryboardViewControllerResource<LanguageViewController>(identifier: "LanguageViewController")
       let name = "LanguageView"
-      
+
       func languageViewController(_: Void = ()) -> LanguageViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: languageViewController)
       }
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.languageView().languageViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'languageViewController' could not be loaded from storyboard 'LanguageView' as 'LanguageViewController'.") }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct launchScreen: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = UIKit.UIViewController
-      
+
       let bundle = R.hostingBundle
       let name = "LaunchScreen"
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct main: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = UIKit.UIViewController
-      
+
       let bundle = R.hostingBundle
       let name = "Main"
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct movieWallView: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = MovieWallViewController
-      
+
       let bundle = R.hostingBundle
       let movieWallViewController = StoryboardViewControllerResource<MovieWallViewController>(identifier: "MovieWallViewController")
       let name = "MovieWallView"
-      
+
       func movieWallViewController(_: Void = ()) -> MovieWallViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: movieWallViewController)
       }
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.movieWallView().movieWallViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'movieWallViewController' could not be loaded from storyboard 'MovieWallView' as 'MovieWallViewController'.") }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct textListView: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = TextListViewController
-      
+
       let bundle = R.hostingBundle
       let name = "TextListView"
       let textListViewController = StoryboardViewControllerResource<TextListViewController>(identifier: "TextListViewController")
-      
+
       func textListViewController(_: Void = ()) -> TextListViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: textListViewController)
       }
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.textListView().textListViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'textListViewController' could not be loaded from storyboard 'TextListView' as 'TextListViewController'.") }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct videoListView: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = VideoListViewController
-      
+
       let bundle = R.hostingBundle
       let name = "VideoListView"
       let videoListViewController = StoryboardViewControllerResource<VideoListViewController>(identifier: "VideoListViewController")
-      
+
       func videoListViewController(_: Void = ()) -> VideoListViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: videoListViewController)
       }
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.videoListView().videoListViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'videoListViewController' could not be loaded from storyboard 'VideoListView' as 'VideoListViewController'.") }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct ytView: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = YTViewController
-      
+
       let bundle = R.hostingBundle
       let name = "YTView"
       let ytViewController = StoryboardViewControllerResource<YTViewController>(identifier: "YTViewController")
-      
+
       func ytViewController(_: Void = ()) -> YTViewController? {
         return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: ytViewController)
       }
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
         if _R.storyboard.ytView().ytViewController() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'ytViewController' could not be loaded from storyboard 'YTView' as 'YTViewController'.") }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
     fileprivate init() {}
   }
-  
+  #endif
+
   fileprivate init() {}
 }

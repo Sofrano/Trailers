@@ -6,34 +6,31 @@
 //  Copyright © 2019 SimpleCode. All rights reserved.
 //
 
-class CastingListPresenter: CastingListModuleInput {
+// MARK: Class
+
+class CastingListPresenter {
 
     weak var view: CastingListViewInput?
     var interactor: CastingListInteractorInput?
     var router: CastingListRouterInput?
-
+    
+    private var vmCreator: CastingListViewModelCreator = CastingListViewModelDefault()
     private var movieId: MovieID?
     
-    
-    func viewIsReady() {
-        view?.setupInitialState()
-        interactor?.fetchCredits(for: movieId ?? 0)
-    }
-    
-    func createViewModel(casts: [DTOCast]) -> CastingListViewModel {
-        let viewModel = CastingListViewModel()
-        casts.forEach { (cast) in
-            let url = cast.profilePath?.url(size: EBackdropSize.w300)
-            let castViewModel = CastCellViewModel(character: cast.character,
-                                                  name: cast.name,
-                                                  imageURL: url)
-            viewModel.castViewModels.append(castViewModel)
+    private func fetchCasts() {
+        guard let id = movieId else {
+            router?.showAlert(withMessage: "Data error")
+            return
         }
-        return viewModel
+        router?.showLoading()
+        interactor?.fetchCasts(for: id)
     }
+    
 }
 
-extension CastingListPresenter: CastingListViewOutput {
+// MARK: Module Input
+
+extension CastingListPresenter: CastingListModuleInput {
     
     func configure(with movieId: MovieID) {
         self.movieId = movieId
@@ -41,16 +38,24 @@ extension CastingListPresenter: CastingListViewOutput {
     
 }
 
-extension CastingListPresenter: CastingListInteractorOutput {
-    
-    func onFetchedCredits(_ credits: DTOCredits) {
-        let casts = (credits.cast ?? []).filter { $0.profilePath != nil }
-        let viewModel = createViewModel(casts: casts)
-        view?.update(with: viewModel)
+// MARK: View Output
+
+extension CastingListPresenter: CastingListViewOutput {
+
+    func viewIsReady() {
+        view?.setupInitialState()
+        fetchCasts()
     }
     
-    func onError(_ error: Error?) {
-        router?.showAlert(withMessage: error?.localizedDescription ?? R.string.localizable.errorUnknown())
+}
+
+// MARK: Interactor Output
+
+extension CastingListPresenter: CastingListInteractorOutput {
+   
+    func onFetchedCasts(_ casts: [DTOCast]) {
+        let viewModel = vmCreator.createViewModel(with: casts)
+        view?.update(with: viewModel)
     }
     
     func onComplete() {

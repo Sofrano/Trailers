@@ -8,6 +8,4 @@
 
 import Foundation
 
-protocol CastingListRouterInput: AlertRoutable, LoadingRoutable {
-
-}
+protocol CastingListRouterInput: AlertRoutable, LoadingRoutable {}

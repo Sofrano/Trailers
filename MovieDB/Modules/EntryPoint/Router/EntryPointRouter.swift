@@ -16,7 +16,7 @@ final class EntryPointRouter {
 
 extension EntryPointRouter: EntryPointRouterInput {
     
-    func openGenresList() {
+    func presentGenreList() {
         if let viewController = R.storyboard.genresPagerView.genresPagerViewController() {
             let navigationController = UINavigationController(rootViewController: viewController)
             UIApplication.shared.keyWindow?.rootViewController = navigationController

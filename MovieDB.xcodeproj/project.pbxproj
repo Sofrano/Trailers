@@ -184,6 +184,9 @@
 		5E376D12225F6475004BE19C /* HorizontalCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E376D11225F6475004BE19C /* HorizontalCollectionCell.swift */; };
 		5E376D14225F6B07004BE19C /* PagerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E376D13225F6B07004BE19C /* PagerTableViewCell.xib */; };
 		5E376D162260E119004BE19C /* CastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E376D152260E119004BE19C /* CastCollectionViewCell.swift */; };
+		5E45782D23F57C2400F6AAFD /* InteactorOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45782C23F57C2400F6AAFD /* InteactorOutput.swift */; };
+		5E45782F23F58BD300F6AAFD /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45782E23F58BD300F6AAFD /* UIApplication+Ext.swift */; };
+		5E45783423F93E4300F6AAFD /* CastingListViewModelCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45783323F93E4300F6AAFD /* CastingListViewModelCreator.swift */; };
 		5E4DF86F22ADAB6600FE8C14 /* TextCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4DF86E22ADAB6600FE8C14 /* TextCellViewModel.swift */; };
 		5E5B5460225B2987004AC4D9 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5B545F225B2987004AC4D9 /* PinterestLayout.swift */; };
 		5E6E1251224E80EB00C448DA /* DiscoverMovieParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6E1250224E80EB00C448DA /* DiscoverMovieParameters.swift */; };
@@ -436,6 +439,9 @@
 		5E376D11225F6475004BE19C /* HorizontalCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCollectionCell.swift; sourceTree = "<group>"; };
 		5E376D13225F6B07004BE19C /* PagerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PagerTableViewCell.xib; sourceTree = "<group>"; };
 		5E376D152260E119004BE19C /* CastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewCell.swift; sourceTree = "<group>"; };
+		5E45782C23F57C2400F6AAFD /* InteactorOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteactorOutput.swift; sourceTree = "<group>"; };
+		5E45782E23F58BD300F6AAFD /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
+		5E45783323F93E4300F6AAFD /* CastingListViewModelCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastingListViewModelCreator.swift; sourceTree = "<group>"; };
 		5E4DF86E22ADAB6600FE8C14 /* TextCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCellViewModel.swift; sourceTree = "<group>"; };
 		5E5B545F225B2987004AC4D9 /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
 		5E6E1250224E80EB00C448DA /* DiscoverMovieParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverMovieParameters.swift; sourceTree = "<group>"; };
@@ -550,6 +556,7 @@
 				5E92D300226DA86D004A99E6 /* StringResource+Ext.swift */,
 				5E2C63A82289BF9A00ED4443 /* UIStoryboard+Ext.swift */,
 				5EA8C62E22B0643F00D25FA1 /* Collection+Ext.swift */,
+				5E45782E23F58BD300F6AAFD /* UIApplication+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -628,12 +635,12 @@
 		5E1610AE22B7675600A1BD60 /* CastingList */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610AF22B7675600A1BD60 /* Misc */,
-				5E1610B222B7675600A1BD60 /* Assembly */,
-				5E1610B422B7675600A1BD60 /* Presenter */,
 				5E1610B722B7675600A1BD60 /* View */,
+				5E1610B422B7675600A1BD60 /* Presenter */,
 				5E1610BC22B7675600A1BD60 /* Interactor */,
 				5E1610C022B7675600A1BD60 /* Router */,
+				5E1610B222B7675600A1BD60 /* Assembly */,
+				5E1610AF22B7675600A1BD60 /* Misc */,
 			);
 			path = CastingList;
 			sourceTree = "<group>";
@@ -641,8 +648,9 @@
 		5E1610AF22B7675600A1BD60 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610B022B7675600A1BD60 /* CastingListCollectionDirector.swift */,
 				5E1610B122B7675600A1BD60 /* CastingListViewModel.swift */,
+				5E45783323F93E4300F6AAFD /* CastingListViewModelCreator.swift */,
+				5E1610B022B7675600A1BD60 /* CastingListCollectionDirector.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -658,8 +666,8 @@
 		5E1610B422B7675600A1BD60 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610B522B7675600A1BD60 /* CastingListModuleInput.swift */,
 				5E1610B622B7675600A1BD60 /* CastingListPresenter.swift */,
+				5E1610B522B7675600A1BD60 /* CastingListModuleInput.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -667,10 +675,10 @@
 		5E1610B722B7675600A1BD60 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610B822B7675600A1BD60 /* CastingListView.storyboard */,
+				5E1610BB22B7675600A1BD60 /* CastingListViewController.swift */,
 				5E1610B922B7675600A1BD60 /* CastingListViewOutput.swift */,
 				5E1610BA22B7675600A1BD60 /* CastingListViewInput.swift */,
-				5E1610BB22B7675600A1BD60 /* CastingListViewController.swift */,
+				5E1610B822B7675600A1BD60 /* CastingListView.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -678,9 +686,9 @@
 		5E1610BC22B7675600A1BD60 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
+				5E1610BF22B7675600A1BD60 /* CastingListInteractor.swift */,
 				5E1610BD22B7675600A1BD60 /* CastingListInteractorInput.swift */,
 				5E1610BE22B7675600A1BD60 /* CastingListInteractorOutput.swift */,
-				5E1610BF22B7675600A1BD60 /* CastingListInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -1164,8 +1172,8 @@
 		5E16114922B7675700A1BD60 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5E16114A22B7675700A1BD60 /* MovieWallViewInput.swift */,
 				5E16114B22B7675700A1BD60 /* MovieWallView.storyboard */,
+				5E16114A22B7675700A1BD60 /* MovieWallViewInput.swift */,
 				5E16114C22B7675700A1BD60 /* MovieWallViewOutput.swift */,
 				5E16114D22B7675700A1BD60 /* MovieWallViewController.swift */,
 			);
@@ -1263,11 +1271,11 @@
 		5E16116A22B7675700A1BD60 /* EntryPoint */ = {
 			isa = PBXGroup;
 			children = (
-				5E16116B22B7675700A1BD60 /* Assembly */,
-				5E16116D22B7675700A1BD60 /* Presenter */,
 				5E16117022B7675700A1BD60 /* View */,
+				5E16116D22B7675700A1BD60 /* Presenter */,
 				5E16117522B7675700A1BD60 /* Interactor */,
 				5E16117922B7675700A1BD60 /* Router */,
+				5E16116B22B7675700A1BD60 /* Assembly */,
 			);
 			path = EntryPoint;
 			sourceTree = "<group>";
@@ -1292,8 +1300,8 @@
 		5E16117022B7675700A1BD60 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5E16117122B7675700A1BD60 /* EntryPointViewController.swift */,
 				5E16117222B7675700A1BD60 /* EntryPointView.storyboard */,
+				5E16117122B7675700A1BD60 /* EntryPointViewController.swift */,
 				5E16117322B7675700A1BD60 /* EntryPointViewInput.swift */,
 				5E16117422B7675700A1BD60 /* EntryPointViewOutput.swift */,
 			);
@@ -1303,8 +1311,8 @@
 		5E16117522B7675700A1BD60 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				5E16117622B7675700A1BD60 /* EntryPointInteractorInput.swift */,
 				5E16117722B7675700A1BD60 /* EntryPointInteractor.swift */,
+				5E16117622B7675700A1BD60 /* EntryPointInteractorInput.swift */,
 				5E16117822B7675700A1BD60 /* EntryPointInteractorOutput.swift */,
 			);
 			path = Interactor;
@@ -1325,8 +1333,8 @@
 				5E211CA7224E4E8200DFA748 /* MovieDB */,
 				5E92D308226DADEB004A99E6 /* MovieDBTests */,
 				5E211CA6224E4E8200DFA748 /* Products */,
-				37F293DFCD6BE7BF9CF98E00 /* Pods */,
 				0F30643D72AF318C651F3656 /* Frameworks */,
+				37F293DFCD6BE7BF9CF98E00 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1591,6 +1599,7 @@
 				FC9AC0FD4339F7E1238D8A6F /* Routable.swift */,
 				C48EE3E29D3F15D6267DAA17 /* AlertRoutable.swift */,
 				0463084CCFA2D4D42844D9EF /* TransitionHander+Ext.swift */,
+				5E45782C23F57C2400F6AAFD /* InteactorOutput.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1755,7 +1764,7 @@
 				5E211CA1224E4E8200DFA748 /* Sources */,
 				5E211CA2224E4E8200DFA748 /* Frameworks */,
 				5E211CA3224E4E8200DFA748 /* Resources */,
-				0AE93B89AB885633761A04DC /* [CP] Embed Pods Frameworks */,
+				B2CAEB4FB0A4EB1BB6A5E7D3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1860,7 +1869,40 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0AE93B89AB885633761A04DC /* [CP] Embed Pods Frameworks */ = {
+		19F572724B57BAC0DC761706 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MovieDB-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E6E126F224F722A00C448DA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
+			);
+			outputPaths = (
+				$SRCROOT/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
+		};
+		B2CAEB4FB0A4EB1BB6A5E7D3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1918,39 +1960,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MovieDB/Pods-MovieDB-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		19F572724B57BAC0DC761706 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MovieDB-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5E6E126F224F722A00C448DA /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$TEMP_DIR/rswift-lastrun",
-			);
-			outputPaths = (
-				$SRCROOT/R.generated.swift,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1992,6 +2001,7 @@
 				5E1611FD22B7675700A1BD60 /* EntryPointViewOutput.swift in Sources */,
 				2D0DF2A54F02F0298C320ECA /* UIColor+Ext.swift in Sources */,
 				5E1611C222B7675700A1BD60 /* YTPresenter.swift in Sources */,
+				5E45783423F93E4300F6AAFD /* CastingListViewModelCreator.swift in Sources */,
 				5EFBDC3A2250A27800F241A6 /* BlurImageView.swift in Sources */,
 				00D65BD5A9A75A00730E1D58 /* UIViewController+Ext.swift in Sources */,
 				5E16118D22B7675700A1BD60 /* TextListModuleInput.swift in Sources */,
@@ -2118,6 +2128,7 @@
 				5E1611D622B7675700A1BD60 /* ImageListInteractorInput.swift in Sources */,
 				5E16119422B7675700A1BD60 /* TextListInteractorOutput.swift in Sources */,
 				83ACA4B7E430C53C0539A0F8 /* LanguageTableViewCell.swift in Sources */,
+				5E45782F23F58BD300F6AAFD /* UIApplication+Ext.swift in Sources */,
 				5E1611A122B7675700A1BD60 /* LanguageInteractor.swift in Sources */,
 				5E1611E822B7675700A1BD60 /* MovieWallRouter.swift in Sources */,
 				5EF0340922561B2500ADD63D /* YTImageView.swift in Sources */,
@@ -2130,6 +2141,7 @@
 				5E1611DB22B7675700A1BD60 /* MovieWallTableDirector.swift in Sources */,
 				5E1611CD22B7675700A1BD60 /* ImageListViewModel.swift in Sources */,
 				5EF28557228EE62100E99439 /* MediaOverviewViewModel.swift in Sources */,
+				5E45782D23F57C2400F6AAFD /* InteactorOutput.swift in Sources */,
 				5E1611B622B7675700A1BD60 /* GenresPagerPresenter.swift in Sources */,
 				5E1611BF22B7675700A1BD60 /* GenresPagerRouter.swift in Sources */,
 				5E16109522B662CC00A1BD60 /* YTPlayerCellViewModel.swift in Sources */,

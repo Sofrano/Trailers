@@ -14,6 +14,4 @@ final class CastingListRouter {
     
 }
 
-extension CastingListRouter: CastingListRouterInput {
-    
-}
+extension CastingListRouter: CastingListRouterInput {}

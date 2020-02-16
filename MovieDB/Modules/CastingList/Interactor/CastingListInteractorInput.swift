@@ -10,6 +10,9 @@ import Foundation
 
 protocol CastingListInteractorInput {
     
-    func fetchCredits(for movieId: MovieID)
+    /// Fetch information about actors who starred in the film
+    ///
+    /// - parameter movieId: Movie identificator
+    func fetchCasts(for movieId: MovieID)
     
 }

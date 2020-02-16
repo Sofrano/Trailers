@@ -23,7 +23,6 @@ class AppInitializer {
         }
         
         window.rootViewController = viewController
-        //window.makeKeyAndVisible()
     }
     
     func setupNavigationBarAppearance() {
