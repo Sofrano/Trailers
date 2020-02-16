@@ -52,7 +52,7 @@ extension GenreListViewController: GenreListViewInput {
     
     
 }
-extension GenreListViewController: IndicatorInfoProvider {
+extension GenreListViewController: XLPagerPage {
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: self.title?.uppercaseFirstLetter() ?? "Unknown")

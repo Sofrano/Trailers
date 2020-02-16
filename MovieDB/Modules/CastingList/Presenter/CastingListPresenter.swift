@@ -58,8 +58,4 @@ extension CastingListPresenter: CastingListInteractorOutput {
         view?.update(with: viewModel)
     }
     
-    func onComplete() {
-        router?.hideLoading()
-    }
-
 }

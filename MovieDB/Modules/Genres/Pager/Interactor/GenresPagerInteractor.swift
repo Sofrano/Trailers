@@ -9,11 +9,12 @@
 class GenresPagerInteractor: GenresPagerInteractorInput {
 
     weak var output: GenresPagerInteractorOutput?
-    let genresService = GenresNetworkService()
     
     func fetchGenres() {
         // The data is already in the configurator, which received information
         // about genres at the stage of loading the application
         self.output?.onFetchedGenres(ConfigurationManager.genres)
+        output?.onComplete()
     }
+    
 }

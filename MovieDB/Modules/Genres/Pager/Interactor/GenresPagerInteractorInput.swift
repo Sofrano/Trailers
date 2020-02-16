@@ -10,6 +10,7 @@ import Foundation
 
 protocol GenresPagerInteractorInput {
     
+    /// Fetch list of all genres
     func fetchGenres()
     
 }

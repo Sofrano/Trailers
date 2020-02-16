@@ -843,8 +843,8 @@
 		5E1610ED22B7675700A1BD60 /* Genres */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610EE22B7675700A1BD60 /* List */,
 				5E16110322B7675700A1BD60 /* Pager */,
+				5E1610EE22B7675700A1BD60 /* List */,
 			);
 			path = Genres;
 			sourceTree = "<group>";
@@ -852,12 +852,12 @@
 		5E1610EE22B7675700A1BD60 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610EF22B7675700A1BD60 /* Misc */,
-				5E1610F222B7675700A1BD60 /* Assembly */,
-				5E1610F422B7675700A1BD60 /* Presenter */,
 				5E1610F722B7675700A1BD60 /* View */,
+				5E1610F422B7675700A1BD60 /* Presenter */,
 				5E1610FC22B7675700A1BD60 /* Interactor */,
 				5E16110022B7675700A1BD60 /* Router */,
+				5E1610F222B7675700A1BD60 /* Assembly */,
+				5E1610EF22B7675700A1BD60 /* Misc */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -882,8 +882,8 @@
 		5E1610F422B7675700A1BD60 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610F522B7675700A1BD60 /* GenreListModuleInput.swift */,
 				5E1610F622B7675700A1BD60 /* GenreListPresenter.swift */,
+				5E1610F522B7675700A1BD60 /* GenreListModuleInput.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -891,10 +891,10 @@
 		5E1610F722B7675700A1BD60 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610F822B7675700A1BD60 /* GenreListView.storyboard */,
-				5E1610F922B7675700A1BD60 /* GenreListViewInput.swift */,
 				5E1610FA22B7675700A1BD60 /* GenreListViewController.swift */,
+				5E1610F922B7675700A1BD60 /* GenreListViewInput.swift */,
 				5E1610FB22B7675700A1BD60 /* GenreListViewOutput.swift */,
+				5E1610F822B7675700A1BD60 /* GenreListView.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -912,8 +912,8 @@
 		5E16110022B7675700A1BD60 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				5E16110122B7675700A1BD60 /* GenreListRouterInput.swift */,
 				5E16110222B7675700A1BD60 /* GenreListRouter.swift */,
+				5E16110122B7675700A1BD60 /* GenreListRouterInput.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -921,11 +921,11 @@
 		5E16110322B7675700A1BD60 /* Pager */ = {
 			isa = PBXGroup;
 			children = (
-				5E16110422B7675700A1BD60 /* Assembly */,
-				5E16110622B7675700A1BD60 /* Presenter */,
 				5E16110922B7675700A1BD60 /* View */,
+				5E16110622B7675700A1BD60 /* Presenter */,
 				5E16110E22B7675700A1BD60 /* Interactor */,
 				5E16111222B7675700A1BD60 /* Router */,
+				5E16110422B7675700A1BD60 /* Assembly */,
 			);
 			path = Pager;
 			sourceTree = "<group>";
@@ -951,9 +951,9 @@
 			isa = PBXGroup;
 			children = (
 				5E16110A22B7675700A1BD60 /* GenresPagerViewController.swift */,
+				5E16110D22B7675700A1BD60 /* GenresPagerViewInput.swift */,
 				5E16110B22B7675700A1BD60 /* GenresPagerViewOutput.swift */,
 				5E16110C22B7675700A1BD60 /* GenresPagerView.storyboard */,
-				5E16110D22B7675700A1BD60 /* GenresPagerViewInput.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -961,9 +961,9 @@
 		5E16110E22B7675700A1BD60 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				5E16110F22B7675700A1BD60 /* GenresPagerInteractorOutput.swift */,
 				5E16111022B7675700A1BD60 /* GenresPagerInteractor.swift */,
 				5E16111122B7675700A1BD60 /* GenresPagerInteractorInput.swift */,
+				5E16110F22B7675700A1BD60 /* GenresPagerInteractorOutput.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";

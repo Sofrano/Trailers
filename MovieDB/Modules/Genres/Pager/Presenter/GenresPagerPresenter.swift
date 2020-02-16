@@ -6,39 +6,35 @@
 //  Copyright © 2019 SimpleCode. All rights reserved.
 //
 
-class GenresPagerPresenter: GenresPagerModuleInput {
+class GenresPagerPresenter {
 
     weak var view: GenresPagerViewInput?
     var interactor: GenresPagerInteractorInput?
     var router: GenresPagerRouterInput?
-
-    func viewIsReady() {
-        view?.setupInitialState()
-        fetchGenres()
-    }
     
     private func fetchGenres() {
         router?.showLoading()
         interactor?.fetchGenres()
     }
+    
 }
 
+extension GenresPagerPresenter: GenresPagerModuleInput {}
+
 extension GenresPagerPresenter: GenresPagerViewOutput {
+    
+    func viewIsReady() {
+        view?.setupInitialState()
+        fetchGenres()
+    }
     
 }
 
 extension GenresPagerPresenter: GenresPagerInteractorOutput {
     
     func onFetchedGenres(_ genres: [DTOGenre]) {
-        view?.update(with: genres)
-    }
-    
-    func onError(_ error: Error?) {
-        router?.showAlert(withMessage: error?.localizedDescription ?? R.string.localizable.errorUnknown())
-    }
-    
-    func onComplete() {
-        router?.hideLoading()
+        guard let pages = router?.createPages(with: genres) else { return }
+        view?.update(withPages: pages)
     }
 
 }

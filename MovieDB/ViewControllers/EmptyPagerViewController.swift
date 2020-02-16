@@ -13,7 +13,9 @@ import XLPagerTabStrip
 // XLPagerTabStrip requires at least one controller, this is an empty controller,
 // which is displayed when loading the list of pages
 
-class EmptyPagerViewController: UIViewController, IndicatorInfoProvider {
+protocol XLPagerPage: UIViewController, IndicatorInfoProvider {}
+
+class EmptyPagerViewController: UIViewController, XLPagerPage {
     
     override func viewDidLoad() {
         super.viewDidLoad()

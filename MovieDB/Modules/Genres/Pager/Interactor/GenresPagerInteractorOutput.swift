@@ -8,9 +8,12 @@
 
 import Foundation
 
-protocol GenresPagerInteractorOutput: class {
+protocol GenresPagerInteractorOutput: class, InteractorOutput {
 
-    func onError(_ error: Error?)
-    func onComplete()
+    /// All movie genres
+    ///
+    /// The function will be called by the interactor when the data is received
+    /// - parameter genres: list of genres
     func onFetchedGenres(_ genres: [DTOGenre])
+    
 }

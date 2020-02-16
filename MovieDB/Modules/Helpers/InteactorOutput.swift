@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
 
 // Default functions for the interactor
 protocol InteractorOutput {
@@ -23,6 +24,11 @@ extension InteractorOutput {
     func onError(_ error: Error?) {
         UIApplication.topViewController()?
             .showAlert(withMessage: error?.localizedDescription ?? R.string.localizable.errorUnknown())
+    }
+    
+    // By default, we dismissing loading state
+    func onComplete() {
+        SVProgressHUD.dismiss()
     }
     
 }
