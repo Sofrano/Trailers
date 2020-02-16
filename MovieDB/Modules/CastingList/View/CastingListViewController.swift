@@ -18,7 +18,7 @@ class CastingListViewController: UIViewController {
     // MARK: - Variables
 
     var output: CastingListViewOutput?
-    private var collectionDirector: CastingListCollectionDirector = CastingListDefaultCollectionDirector()
+    private lazy var collectionDirector: CastingListCollectionDirector = CastingListDefaultCollectionDirector(collectionView: self.collectionView)
     
     // MARK: - Life cycle
 
@@ -37,8 +37,7 @@ extension CastingListViewController: CastingListViewInput {
     }
     
     func update(with viewModel: CastingListViewModel) {
-        collectionDirector.update(with: viewModel,
-                                  collectionView: collectionView)
+        collectionDirector.update(with: viewModel)
     }
     
 }

@@ -16,7 +16,7 @@ protocol CastingListCollectionDirector {
     ///
     /// - parameter viewModel: viewModel with casting list data
     /// - parameter collectionView: collection where data will be displayed
-    func update(with viewModel: CastingListViewModel, collectionView: UICollectionView)
+    func update(with viewModel: CastingListViewModel)
     
 }
 
@@ -25,10 +25,12 @@ class CastingListDefaultCollectionDirector: NSObject, CastingListCollectionDirec
     private var viewModel: CastingListViewModel!
     private var collectionView: UICollectionView!
     
-    public func update(with viewModel: CastingListViewModel,
-                       collectionView: UICollectionView) {
-        self.viewModel = viewModel
+    init(collectionView: UICollectionView) {
         self.collectionView = collectionView
+    }
+    
+    public func update(with viewModel: CastingListViewModel) {
+        self.viewModel = viewModel
         configureCollectionView()
     }
     
