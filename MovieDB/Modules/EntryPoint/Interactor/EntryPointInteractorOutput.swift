@@ -19,14 +19,14 @@ protocol EntryPointInteractorOutput: class, InteractorOutput {
     /// List of available genres
     ///
     /// The function will be called by the interactor when the data is received
-    /// - parameter genres: List of available genres
+    /// - parameter genres: list of available genres
     func onFetchedGenres(_ genres: [DTOGenre])
     
     /// Informing about the current progress of data loading
     ///
     ///
     /// The function will be called by the interactor when the data is received
-    /// - parameter progress: The value of progress. Values from 0.0 to 1.0 are used
+    /// - parameter progress: the value of progress. Values from 0.0 to 1.0 are used
     func onChangeProgress(_ progress: Float)
     
 }

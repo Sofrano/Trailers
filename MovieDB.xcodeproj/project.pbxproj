@@ -1300,10 +1300,10 @@
 		5E16117022B7675700A1BD60 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5E16117222B7675700A1BD60 /* EntryPointView.storyboard */,
 				5E16117122B7675700A1BD60 /* EntryPointViewController.swift */,
 				5E16117322B7675700A1BD60 /* EntryPointViewInput.swift */,
 				5E16117422B7675700A1BD60 /* EntryPointViewOutput.swift */,
+				5E16117222B7675700A1BD60 /* EntryPointView.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
