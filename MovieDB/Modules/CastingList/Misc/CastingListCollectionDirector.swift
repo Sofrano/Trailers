@@ -9,8 +9,15 @@
 import Foundation
 import UIKit
 
+
 protocol CastingListCollectionDirector {
+    
+    /// A function that updates data in a collection based on a list of models
+    ///
+    /// - parameter viewModel: viewModel with casting list data
+    /// - parameter collectionView: collection where data will be displayed
     func update(with viewModel: CastingListViewModel, collectionView: UICollectionView)
+    
 }
 
 class CastingListDefaultCollectionDirector: NSObject, CastingListCollectionDirector {
@@ -31,10 +38,14 @@ extension CastingListDefaultCollectionDirector {
     
     private func configureCollectionView() {
         collectionView.backgroundColor = UIColor.clear
-        collectionView.contentInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+        collectionView.contentInset = UIEdgeInsets(top: 1,
+                                                   left: 1,
+                                                   bottom: 1,
+                                                   right: 1)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(CastCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(CastCollectionViewCell.self,
+                                forCellWithReuseIdentifier: "cell")
         if let layout = collectionView?.collectionViewLayout as? PinterestLayout {
             layout.delegate = self
         }
@@ -43,11 +54,13 @@ extension CastingListDefaultCollectionDirector {
 
 extension CastingListDefaultCollectionDirector: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         return viewModel.castViewModels.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         // Configure cell
         if let castCell = cell as? CastCollectionViewCell,
@@ -68,7 +81,8 @@ extension CastingListDefaultCollectionDirector: UICollectionViewDelegate, UIColl
 
 extension CastingListDefaultCollectionDirector: PinterestLayoutDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView,
+                        heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
         return 200
     }
     
