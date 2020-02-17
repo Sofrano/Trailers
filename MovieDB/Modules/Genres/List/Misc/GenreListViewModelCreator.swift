@@ -8,23 +8,35 @@
 
 import Foundation
 
+// MARK: - Output
+
 protocol GenreListViewModelOutput: class {
+    /// User open the movie
     func openMovie(_ movie: DTOMovie)
+    /// User changes the movie
     func stateChanged(viewModel: GenreListViewModel)
 }
+
+// MARK: - Protocol Creator
 
 protocol GenreListViewModelCreator {
     
     func createViewModel(movies: [DTOMovie]) -> GenreListViewModel
 }
 
+// MARK: - Default Creator
+
 class GenreListViewModelDefault: GenreListViewModelCreator {
     
     weak var output: GenreListViewModelOutput?
     
+    // MARK: - Constructor
+    
     init(output: GenreListViewModelOutput) {
         self.output = output
     }
+    
+    // MARK: - Functions
     
     func createViewModel(movies: [DTOMovie]) -> GenreListViewModel {
         let posters = movies.map { $0.posterPath?.url(size: EPosterSize.w342) }.compactMap { $0 }

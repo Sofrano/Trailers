@@ -12,4 +12,5 @@ protocol ImageListViewInput: class {
     
     func setupInitialState()
     func update(with viewModel: ImageListViewModel)
+    
 }

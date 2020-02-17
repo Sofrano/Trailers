@@ -10,5 +10,5 @@ import Foundation
 
 protocol ImageListRouterInput: AlertRoutable, LoadingRoutable, PresentRoutable {
     
-    func openSlider(imageURLs: [URL], index: Int)
+    func presentSlider(imageURLs: [URL], scrollToIndex index: Int)
 }

@@ -17,7 +17,7 @@ final class ImageListRouter {
 
 extension ImageListRouter: ImageListRouterInput {
 
-    func openSlider(imageURLs: [URL], index: Int) {
+    func presentSlider(imageURLs: [URL], scrollToIndex index: Int) {
         let slider = PhotoSlider.ViewController(imageURLs: imageURLs)
         slider.currentPage = index
         present(slider)

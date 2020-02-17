@@ -9,5 +9,7 @@
 import Foundation
 
 class ImageListViewModel {
+    
     var imagesViewModel: [ImageCellViewModel] = []
+    
 }

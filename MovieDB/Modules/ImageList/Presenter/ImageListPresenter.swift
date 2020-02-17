@@ -6,56 +6,53 @@
 //  Copyright © 2019 SimpleCode. All rights reserved.
 //
 
-class ImageListPresenter: ImageListModuleInput {
+// MARK: - Class
+import Foundation
+class ImageListPresenter {
 
     weak var view: ImageListViewInput?
     var interactor: ImageListInteractorInput?
     var router: ImageListRouterInput?
+    
+    private lazy var vmCreator: ImageListViewModelCreator = ImageListDefaultViewModelCreator(output: self)
     private var posters: [DTOPoster] = []
+    private var imageURLs: [URL] = []
+    
+}
+
+// MARK: - Module Input
+
+extension ImageListPresenter: ImageListModuleInput {
     
     func configure(with posters: [DTOPoster]) {
         self.posters = posters
-    }
-    
-    func createViewModel(_ posters: [DTOPoster]) -> ImageListViewModel {
-        let viewModel = ImageListViewModel()
-        let imageURLs = posters.map { $0.filePath?.url(size: EBackdropSize.original) }.compactMap { $0 }
-        posters.forEach { (poster) in
-            if let url = poster.filePath?.url(size: EBackdropSize.original) {
-                let imageViewModel = ImageCellViewModel(imageURL: url,
-                                                        aspectRatio: poster.aspectRatio)
-                    .observeAction({ (action) in
-                        switch action {
-                        case .click(let index):
-                            self.router?.openSlider(imageURLs: imageURLs, index: index)
-                        }
-                    })
-                viewModel.imagesViewModel.append(imageViewModel)
-            }
-            
-        }
-        return viewModel
+        imageURLs = posters.map { $0.filePath?.url(size: EBackdropSize.original) }.compactMap { $0 }
     }
     
 }
+
+// MARK: - View Output
 
 extension ImageListPresenter: ImageListViewOutput {
     
     func viewIsReady() {
         view?.setupInitialState()
-        let viewModel = createViewModel(posters)
+        let viewModel = vmCreator.createViewModel(posters)
         view?.update(with: viewModel)
     }
 }
 
-extension ImageListPresenter: ImageListInteractorOutput {
-    
-    func onError(_ error: Error?) {
-        router?.showAlert(withMessage: error?.localizedDescription ?? R.string.localizable.errorUnknown())
-    }
-    
-    func onComplete() {
-        router?.hideLoading()
+// MARK: - ViewModel Output
+
+extension ImageListPresenter: ImageListViewModelOutput {
+  
+    func imageClick(atIndex: Int) {
+        router?.presentSlider(imageURLs: imageURLs,
+                              scrollToIndex: atIndex)
     }
 
 }
+
+// MARK: - Interactor Output
+
+extension ImageListPresenter: ImageListInteractorOutput {}

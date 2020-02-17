@@ -9,27 +9,31 @@
 import Foundation
 import TableKit
 
-class ImageListTableDirector {
-    
-    fileprivate var viewModel: ImageListViewModel!
-    fileprivate var tableKit: TableDirector!
-    
-    public func update(with viewModel: ImageListViewModel,
-                       tableView: UITableView) {
-        self.viewModel = viewModel
-        if tableKit == nil {
-            self.tableKit = TableDirector(tableView: tableView)
-        }
-        configureTableView()
-    }
-    
-    fileprivate func configureTableView() {}
+protocol ImageListTableDirector {
+
+    func update(with viewModel: ImageListViewModel)
     
 }
 
 class ImageListDefaultTableDirector: ImageListTableDirector {
     
-    fileprivate override func configureTableView() {
+    private var viewModel: ImageListViewModel!
+    private var tableKit: TableDirector!
+    
+    init(tableView: UITableView) {
+        self.tableKit = TableDirector(tableView: tableView)
+    }
+    
+    public func update(with viewModel: ImageListViewModel) {
+        self.viewModel = viewModel
+        configureTableView()
+    }
+    
+}
+
+extension ImageListDefaultTableDirector {
+    
+    private func configureTableView() {
         tableKit.clear()
         let section = TableSection(rows: [])
         viewModel.imagesViewModel.forEach { (imageViewModel) in
@@ -42,4 +46,5 @@ class ImageListDefaultTableDirector: ImageListTableDirector {
         tableKit.append(section: section)
         tableKit.reload()
     }
+    
 }

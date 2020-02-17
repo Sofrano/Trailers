@@ -18,7 +18,7 @@ class GenreListPresenter {
     private var genre: DTOGenre!
     private lazy var vmCreator: GenreListViewModelCreator = GenreListViewModelDefault(output: self)
     
-    private func fetchDiscoverMedia() {
+    private func fetchMovies() {
         router?.showLoading()
         interactor?.fetchMovies(genreId: genre.id)
     }
@@ -41,7 +41,7 @@ extension GenreListPresenter: GenreListViewOutput {
     
     func viewIsReady() {
         view?.setupInitialState()
-        fetchDiscoverMedia()
+        fetchMovies()
     }
     
 }
@@ -50,10 +50,12 @@ extension GenreListPresenter: GenreListViewOutput {
 
 extension GenreListPresenter: GenreListViewModelOutput {
     
+    // User changes the movie
     func stateChanged(viewModel: GenreListViewModel) {
         view?.update(with: viewModel)
     }
     
+    // User open the movie
     func openMovie(_ movie: DTOMovie) {
         router?.presentMovie(movie)
     }

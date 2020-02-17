@@ -18,7 +18,7 @@ class ImageListViewController: UIViewController {
     
     // MARK: - Variables
     
-    private var tableDirector = ImageListDefaultTableDirector()
+    lazy var tableDirector: ImageListTableDirector = ImageListDefaultTableDirector(tableView: self.tableView)
     var output: ImageListViewOutput?
 
     // MARK: - Life cycle
@@ -33,7 +33,7 @@ class ImageListViewController: UIViewController {
 extension ImageListViewController: ImageListViewInput {
     
     func update(with viewModel: ImageListViewModel) {
-        tableDirector.update(with: viewModel, tableView: tableView)
+        tableDirector.update(with: viewModel)
     }
 
     func setupInitialState() {

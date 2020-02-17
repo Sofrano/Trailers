@@ -188,6 +188,7 @@
 		5E45782F23F58BD300F6AAFD /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45782E23F58BD300F6AAFD /* UIApplication+Ext.swift */; };
 		5E45783423F93E4300F6AAFD /* CastingListViewModelCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45783323F93E4300F6AAFD /* CastingListViewModelCreator.swift */; };
 		5E45783623F97AA500F6AAFD /* GenreListViewModelCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45783523F97AA500F6AAFD /* GenreListViewModelCreator.swift */; };
+		5E45783D23FA8D5D00F6AAFD /* ImageListViewModelCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45783C23FA8D5D00F6AAFD /* ImageListViewModelCreator.swift */; };
 		5E4DF86F22ADAB6600FE8C14 /* TextCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4DF86E22ADAB6600FE8C14 /* TextCellViewModel.swift */; };
 		5E5B5460225B2987004AC4D9 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5B545F225B2987004AC4D9 /* PinterestLayout.swift */; };
 		5E6E1251224E80EB00C448DA /* DiscoverMovieParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6E1250224E80EB00C448DA /* DiscoverMovieParameters.swift */; };
@@ -444,6 +445,7 @@
 		5E45782E23F58BD300F6AAFD /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
 		5E45783323F93E4300F6AAFD /* CastingListViewModelCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastingListViewModelCreator.swift; sourceTree = "<group>"; };
 		5E45783523F97AA500F6AAFD /* GenreListViewModelCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreListViewModelCreator.swift; sourceTree = "<group>"; };
+		5E45783C23FA8D5D00F6AAFD /* ImageListViewModelCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListViewModelCreator.swift; sourceTree = "<group>"; };
 		5E4DF86E22ADAB6600FE8C14 /* TextCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCellViewModel.swift; sourceTree = "<group>"; };
 		5E5B545F225B2987004AC4D9 /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
 		5E6E1250224E80EB00C448DA /* DiscoverMovieParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverMovieParameters.swift; sourceTree = "<group>"; };
@@ -1042,12 +1044,12 @@
 		5E16112722B7675700A1BD60 /* ImageList */ = {
 			isa = PBXGroup;
 			children = (
-				5E16112822B7675700A1BD60 /* Misc */,
-				5E16112B22B7675700A1BD60 /* Assembly */,
-				5E16112D22B7675700A1BD60 /* Presenter */,
 				5E16113022B7675700A1BD60 /* View */,
+				5E16112D22B7675700A1BD60 /* Presenter */,
 				5E16113522B7675700A1BD60 /* Interactor */,
 				5E16113922B7675700A1BD60 /* Router */,
+				5E16112B22B7675700A1BD60 /* Assembly */,
+				5E16112822B7675700A1BD60 /* Misc */,
 			);
 			path = ImageList;
 			sourceTree = "<group>";
@@ -1057,6 +1059,7 @@
 			children = (
 				5E16112922B7675700A1BD60 /* ImageListTableDirector.swift */,
 				5E16112A22B7675700A1BD60 /* ImageListViewModel.swift */,
+				5E45783C23FA8D5D00F6AAFD /* ImageListViewModelCreator.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -1081,10 +1084,10 @@
 		5E16113022B7675700A1BD60 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5E16113422B7675700A1BD60 /* ImageListViewController.swift */,
 				5E16113122B7675700A1BD60 /* ImageListViewInput.swift */,
 				5E16113222B7675700A1BD60 /* ImageListViewOutput.swift */,
 				5E16113322B7675700A1BD60 /* ImageListView.storyboard */,
-				5E16113422B7675700A1BD60 /* ImageListViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1092,9 +1095,9 @@
 		5E16113522B7675700A1BD60 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				5E16113622B7675700A1BD60 /* ImageListInteractorOutput.swift */,
-				5E16113722B7675700A1BD60 /* ImageListInteractorInput.swift */,
 				5E16113822B7675700A1BD60 /* ImageListInteractor.swift */,
+				5E16113722B7675700A1BD60 /* ImageListInteractorInput.swift */,
+				5E16113622B7675700A1BD60 /* ImageListInteractorOutput.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -2030,6 +2033,7 @@
 				FDF0785E04559D221E55087B /* AlertRoutable.swift in Sources */,
 				5E16119C22B7675700A1BD60 /* LanguagePresenter.swift in Sources */,
 				5E16117D22B7675700A1BD60 /* CastingListViewModel.swift in Sources */,
+				5E45783D23FA8D5D00F6AAFD /* ImageListViewModelCreator.swift in Sources */,
 				5E16118B22B7675700A1BD60 /* TextListTableDirector.swift in Sources */,
 				30032BC0868091F2CBFF7483 /* LoadingRoutable.swift in Sources */,
 				5E1611FF22B7675700A1BD60 /* EntryPointInteractor.swift in Sources */,

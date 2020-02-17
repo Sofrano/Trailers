@@ -8,9 +8,6 @@
 
 import Foundation
 
-protocol ImageListInteractorOutput: class {
-
-    func onError(_ error: Error?)
-    func onComplete()
+protocol ImageListInteractorOutput: class, InteractorOutput {
     
 }
