@@ -8,9 +8,4 @@
 
 import Foundation
 
-protocol TextListInteractorOutput: class {
-
-    func onError(_ error: Error?)
-    func onComplete()
-    
-}
+protocol TextListInteractorOutput: class, InteractorOutput {}

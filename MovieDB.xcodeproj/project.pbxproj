@@ -713,12 +713,12 @@
 		5E1610C322B7675700A1BD60 /* TextList */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610C422B7675700A1BD60 /* Misc */,
-				5E1610C722B7675700A1BD60 /* Assembly */,
-				5E1610C922B7675700A1BD60 /* Presenter */,
 				5E1610CC22B7675700A1BD60 /* View */,
+				5E1610C922B7675700A1BD60 /* Presenter */,
 				5E1610D122B7675700A1BD60 /* Interactor */,
 				5E1610D522B7675700A1BD60 /* Router */,
+				5E1610C722B7675700A1BD60 /* Assembly */,
+				5E1610C422B7675700A1BD60 /* Misc */,
 			);
 			path = TextList;
 			sourceTree = "<group>";
@@ -753,8 +753,8 @@
 			isa = PBXGroup;
 			children = (
 				5E1610CD22B7675700A1BD60 /* TextListViewController.swift */,
-				5E1610CE22B7675700A1BD60 /* TextListViewOutput.swift */,
 				5E1610CF22B7675700A1BD60 /* TextListViewInput.swift */,
+				5E1610CE22B7675700A1BD60 /* TextListViewOutput.swift */,
 				5E1610D022B7675700A1BD60 /* TextListView.storyboard */,
 			);
 			path = View;
@@ -764,8 +764,8 @@
 			isa = PBXGroup;
 			children = (
 				5E1610D222B7675700A1BD60 /* TextListInteractorInput.swift */,
-				5E1610D322B7675700A1BD60 /* TextListInteractorOutput.swift */,
 				5E1610D422B7675700A1BD60 /* TextListInteractor.swift */,
+				5E1610D322B7675700A1BD60 /* TextListInteractorOutput.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";

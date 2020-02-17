@@ -9,27 +9,31 @@
 import Foundation
 import TableKit
 
-class TextListTableDirector {
+protocol TextListTableDirector {
     
-    fileprivate var viewModel: TextListViewModel!
-    fileprivate var tableKit: TableDirector!
-    
-    public func update(with viewModel: TextListViewModel,
-                       tableView: UITableView) {
-        self.viewModel = viewModel
-        if tableKit == nil {
-            self.tableKit = TableDirector(tableView: tableView)
-        }
-        configureTableView()
-    }
-    
-    fileprivate func configureTableView() {}
+    func update(with viewModel: TextListViewModel)
     
 }
 
 class TextListDefaultTableDirector: TextListTableDirector {
     
-    fileprivate override func configureTableView() {
+    private var viewModel: TextListViewModel!
+    private var tableKit: TableDirector!
+    
+    init(tableView: UITableView) {
+        tableKit = TableDirector(tableView: tableView)
+    }
+    
+    public func update(with viewModel: TextListViewModel) {
+        self.viewModel = viewModel
+        updateTableView()
+    }
+    
+}
+
+extension TextListDefaultTableDirector {
+    
+    private func updateTableView() {
         tableKit.clear()
         let section = TableSection(rows: [])
         section.headerHeight = 0.1
@@ -41,4 +45,5 @@ class TextListDefaultTableDirector: TextListTableDirector {
         tableKit.append(section: section)
         tableKit.reload()
     }
+    
 }

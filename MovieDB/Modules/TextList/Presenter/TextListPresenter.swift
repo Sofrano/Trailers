@@ -6,7 +6,9 @@
 //  Copyright © 2019 SimpleCode. All rights reserved.
 //
 
-class TextListPresenter: TextListModuleInput {
+// MARK: - Class
+
+class TextListPresenter {
 
     weak var view: TextListViewInput?
     var interactor: TextListInteractorInput?
@@ -14,11 +16,19 @@ class TextListPresenter: TextListModuleInput {
 
     private var items: [String] = []
     
+}
+
+// MARK: - Module Input
+
+extension TextListPresenter: TextListModuleInput {
+    
     func configure(with items: [String]) {
         self.items = items
     }
     
 }
+
+// MARK: - View Output
 
 extension TextListPresenter: TextListViewOutput {
 
@@ -30,14 +40,6 @@ extension TextListPresenter: TextListViewOutput {
     
 }
 
-extension TextListPresenter: TextListInteractorOutput {
-    
-    func onError(_ error: Error?) {
-        router?.showAlert(withMessage: error?.localizedDescription ?? R.string.localizable.errorUnknown())
-    }
-    
-    func onComplete() {
-        router?.hideLoading()
-    }
+// MARK: - Interactor Output
 
-}
+extension TextListPresenter: TextListInteractorOutput {}

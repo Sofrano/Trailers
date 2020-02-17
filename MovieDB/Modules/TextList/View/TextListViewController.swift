@@ -9,44 +9,48 @@
 import UIKit
 
 class TextListViewController: UIViewController {
-
+    
     // MARK: - IBOutlets
     
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        view.addSubview(tableView)
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor.clear
+        return tableView
+    }()
     
     // MARK: - Variables
-
+    
     var output: TextListViewOutput?
-    var tableDirector = TextListDefaultTableDirector()
+    private lazy var tableDirector: TextListTableDirector = TextListDefaultTableDirector(tableView: self.tableView)
     
     // MARK: - Life cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         output?.viewIsReady()
     }
-
+    
     // MARK: - Private functions
-
-    private func setupTable() {
-        self.view.addSubview(tableView)
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.clear
+    
+    private func setupConstraints() {
         tableView.snp.makeConstraints { (make) in
             make.left.top.right.bottom.equalToSuperview()
         }
     }
-
+    
 }
 
 extension TextListViewController: TextListViewInput {
-
+    
     func setupInitialState() {
         self.view.backgroundColor = UIColor.appColor.behance
-        setupTable()
+        setupConstraints()
     }
     
     func update(with viewModel: TextListViewModel) {
-        tableDirector.update(with: viewModel, tableView: tableView)
+        tableDirector.update(with: viewModel)
     }
+    
 }
