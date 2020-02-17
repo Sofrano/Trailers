@@ -26,12 +26,14 @@ class CastingListDefaultCollectionDirector: NSObject, CastingListCollectionDirec
     private var collectionView: UICollectionView!
     
     init(collectionView: UICollectionView) {
+        super.init()
         self.collectionView = collectionView
+        configureCollectionView()
     }
     
     public func update(with viewModel: CastingListViewModel) {
         self.viewModel = viewModel
-        configureCollectionView()
+        collectionView.reloadData()
     }
     
 }

@@ -10,7 +10,7 @@ import Foundation
 
 protocol LanguageRouterInput: AlertRoutable, LoadingRoutable, PresentRoutable {
 
-    func openEntryPoint() 
-    func showWelcomeMessage()
+    func presentEntryPoint() 
+    func presentWelcome()
     
 }

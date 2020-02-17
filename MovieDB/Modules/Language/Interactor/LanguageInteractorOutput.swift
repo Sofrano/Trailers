@@ -8,9 +8,8 @@
 
 import Foundation
 
-protocol LanguageInteractorOutput: class {
+protocol LanguageInteractorOutput: class, InteractorOutput {
 
-    func onError(_ error: Error?)
-    func onComplete()
     func onFetchedLanguages(_ languages: [DTOLanguage])
+    
 }

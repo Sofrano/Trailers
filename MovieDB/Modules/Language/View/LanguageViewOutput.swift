@@ -12,6 +12,6 @@ protocol LanguageViewOutput {
         @author Dmitriy Safarov
         Notify presenter that view is ready
     */
-    func search(_ query: String)
+    func search(_ query: String?)
     func viewIsReady()
 }

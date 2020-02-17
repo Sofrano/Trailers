@@ -26,14 +26,14 @@ class ImageListDefaultTableDirector: ImageListTableDirector {
     
     public func update(with viewModel: ImageListViewModel) {
         self.viewModel = viewModel
-        configureTableView()
+        updateTableView()
     }
     
 }
 
 extension ImageListDefaultTableDirector {
     
-    private func configureTableView() {
+    private func updateTableView() {
         tableKit.clear()
         let section = TableSection(rows: [])
         viewModel.imagesViewModel.forEach { (imageViewModel) in

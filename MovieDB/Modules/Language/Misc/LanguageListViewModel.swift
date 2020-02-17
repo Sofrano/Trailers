@@ -9,10 +9,24 @@
 import Foundation
 
 class LanguageListViewModel {
-    let languages: [TextCellViewModel]
+    var languages: [TextCellViewModel]
     var onSelectLanguage: (_ atIndex: Int) -> Void = {_ in}
+    var scrollToIndex: ((_ index: Int) -> Void)?
+    
+    private var sourceLanguages: [TextCellViewModel] = []
+    
+    func filterLanguages(with query: String?) {
+        guard let query = query?.uppercased() else {
+            languages = sourceLanguages
+            return
+        }
+        languages = sourceLanguages.filter {
+            $0.text.uppercased().contains(query)
+        }
+    }
     
     init(languages: [TextCellViewModel]) {
         self.languages = languages
+        self.sourceLanguages = languages
     }
 }

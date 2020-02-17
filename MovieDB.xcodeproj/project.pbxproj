@@ -189,6 +189,7 @@
 		5E45783423F93E4300F6AAFD /* CastingListViewModelCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45783323F93E4300F6AAFD /* CastingListViewModelCreator.swift */; };
 		5E45783623F97AA500F6AAFD /* GenreListViewModelCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45783523F97AA500F6AAFD /* GenreListViewModelCreator.swift */; };
 		5E45783D23FA8D5D00F6AAFD /* ImageListViewModelCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45783C23FA8D5D00F6AAFD /* ImageListViewModelCreator.swift */; };
+		5E45783F23FAA73B00F6AAFD /* LanguageListViewModelCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E45783E23FAA73B00F6AAFD /* LanguageListViewModelCreator.swift */; };
 		5E4DF86F22ADAB6600FE8C14 /* TextCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4DF86E22ADAB6600FE8C14 /* TextCellViewModel.swift */; };
 		5E5B5460225B2987004AC4D9 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5B545F225B2987004AC4D9 /* PinterestLayout.swift */; };
 		5E6E1251224E80EB00C448DA /* DiscoverMovieParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6E1250224E80EB00C448DA /* DiscoverMovieParameters.swift */; };
@@ -446,6 +447,7 @@
 		5E45783323F93E4300F6AAFD /* CastingListViewModelCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastingListViewModelCreator.swift; sourceTree = "<group>"; };
 		5E45783523F97AA500F6AAFD /* GenreListViewModelCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreListViewModelCreator.swift; sourceTree = "<group>"; };
 		5E45783C23FA8D5D00F6AAFD /* ImageListViewModelCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListViewModelCreator.swift; sourceTree = "<group>"; };
+		5E45783E23FAA73B00F6AAFD /* LanguageListViewModelCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageListViewModelCreator.swift; sourceTree = "<group>"; };
 		5E4DF86E22ADAB6600FE8C14 /* TextCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCellViewModel.swift; sourceTree = "<group>"; };
 		5E5B545F225B2987004AC4D9 /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
 		5E6E1250224E80EB00C448DA /* DiscoverMovieParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverMovieParameters.swift; sourceTree = "<group>"; };
@@ -778,12 +780,12 @@
 		5E1610D822B7675700A1BD60 /* Language */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610D922B7675700A1BD60 /* Misc */,
-				5E1610DC22B7675700A1BD60 /* Assembly */,
-				5E1610DE22B7675700A1BD60 /* Presenter */,
 				5E1610E122B7675700A1BD60 /* View */,
+				5E1610DE22B7675700A1BD60 /* Presenter */,
 				5E1610E622B7675700A1BD60 /* Interactor */,
 				5E1610EA22B7675700A1BD60 /* Router */,
+				5E1610DC22B7675700A1BD60 /* Assembly */,
+				5E1610D922B7675700A1BD60 /* Misc */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -793,6 +795,7 @@
 			children = (
 				5E1610DA22B7675700A1BD60 /* LanguageListTableDirector.swift */,
 				5E1610DB22B7675700A1BD60 /* LanguageListViewModel.swift */,
+				5E45783E23FAA73B00F6AAFD /* LanguageListViewModelCreator.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -808,8 +811,8 @@
 		5E1610DE22B7675700A1BD60 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610DF22B7675700A1BD60 /* LanguageModuleInput.swift */,
 				5E1610E022B7675700A1BD60 /* LanguagePresenter.swift */,
+				5E1610DF22B7675700A1BD60 /* LanguageModuleInput.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -817,10 +820,10 @@
 		5E1610E122B7675700A1BD60 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5E1610E222B7675700A1BD60 /* LanguageView.storyboard */,
+				5E1610E522B7675700A1BD60 /* LanguageViewController.swift */,
 				5E1610E322B7675700A1BD60 /* LanguageViewInput.swift */,
 				5E1610E422B7675700A1BD60 /* LanguageViewOutput.swift */,
-				5E1610E522B7675700A1BD60 /* LanguageViewController.swift */,
+				5E1610E222B7675700A1BD60 /* LanguageView.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -829,8 +832,8 @@
 			isa = PBXGroup;
 			children = (
 				5E1610E722B7675700A1BD60 /* LanguageInteractor.swift */,
-				5E1610E822B7675700A1BD60 /* LanguageInteractorOutput.swift */,
 				5E1610E922B7675700A1BD60 /* LanguageInteractorInput.swift */,
+				5E1610E822B7675700A1BD60 /* LanguageInteractorOutput.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -2150,6 +2153,7 @@
 				5E1611CD22B7675700A1BD60 /* ImageListViewModel.swift in Sources */,
 				5EF28557228EE62100E99439 /* MediaOverviewViewModel.swift in Sources */,
 				5E45782D23F57C2400F6AAFD /* InteactorOutput.swift in Sources */,
+				5E45783F23FAA73B00F6AAFD /* LanguageListViewModelCreator.swift in Sources */,
 				5E1611B622B7675700A1BD60 /* GenresPagerPresenter.swift in Sources */,
 				5E1611BF22B7675700A1BD60 /* GenresPagerRouter.swift in Sources */,
 				5E16109522B662CC00A1BD60 /* YTPlayerCellViewModel.swift in Sources */,

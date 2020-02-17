@@ -10,6 +10,11 @@ import Foundation
 
 protocol LanguageInteractorInput {
 
+    var userLanguage: String? { get }
+    var defaultLanguage: String { get }
+    
     func fetchLanguages()
+    func setLanguage(_ language: DTOLanguage)
+    
     
 }

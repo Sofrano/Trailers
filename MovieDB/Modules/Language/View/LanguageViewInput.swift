@@ -8,7 +8,6 @@
 
 protocol LanguageViewInput: class {
 
-    func scrollToIndex(_ index: Int)
     func update(with languageListViewModel: LanguageListViewModel)
     func setupInitialState()
 }

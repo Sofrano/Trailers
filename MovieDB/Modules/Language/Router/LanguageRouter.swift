@@ -16,13 +16,13 @@ final class LanguageRouter {
 
 extension LanguageRouter: LanguageRouterInput {
     
-    func showWelcomeMessage() {
+    func presentWelcome() {
         showAlert(withMessage: R.string.localizable.welcome(),
                   title: "Trailers",
                   closeHandler: nil)
     }
     
-    func openEntryPoint() {
+    func presentEntryPoint() {
         let viewController = R.storyboard.entryPointView.entryPointViewController()
         UIApplication.shared.keyWindow?.rootViewController = viewController
     }

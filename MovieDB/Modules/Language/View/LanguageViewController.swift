@@ -22,7 +22,7 @@ class LanguageViewController: UIViewController {
     
     // MARK: - Variables
     
-    private var tableDirector = LanguageListDefaultTableDirector()
+    private lazy var tableDirector: LanguageListTableDirector = LanguageListDefaultTableDirector(tableView: self.tableView)
     var output: LanguageViewOutput?
 
     // MARK: - Life cycle
@@ -35,19 +35,13 @@ class LanguageViewController: UIViewController {
 }
 
 extension LanguageViewController: LanguageViewInput {
-
-    // Used by presenter search
-    // Scroll to the cell in which the found language
-    func scrollToIndex(_ index: Int) {
-        tableView.selectRow(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .middle)
-    }
     
     func setupInitialState() {
         self.view.backgroundColor = UIColor.appColor.behance
     }
     
     func update(with viewModel: LanguageListViewModel) {
-        tableDirector.update(with: viewModel, tableView: tableView)
+        tableDirector.update(with: viewModel)
     }
     
 }
@@ -59,7 +53,7 @@ extension LanguageViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        output?.search(searchBar.text ?? "")
+        output?.search(searchBar.text)
     }
     
 }

@@ -27,19 +27,19 @@ class GenreListDefaultTableDirector: GenreListTableDirector {
     
     public func update(with viewModel: GenreListViewModel) {
         self.viewModel = viewModel
-        setupRows()
+        updateRows()
     }
     
 }
 
 extension GenreListDefaultTableDirector {
     
-    private func setupRows() {
-        setupPosterRows()
-        setupDescriptionRows()
+    private func updateRows() {
+        updatePosterRows()
+        updateDescriptionRows()
     }
     
-    private func setupPosterRows() {
+    private func updatePosterRows() {
         guard tableKit.sections.count == 0 else { return }
         tableKit.clear()
         let section = TableSection(rows: [])
@@ -50,7 +50,7 @@ extension GenreListDefaultTableDirector {
         tableKit.reload()
     }
     
-    private func setupDescriptionRows() {
+    private func updateDescriptionRows() {
         
         // IndexPathes for reloading rows
         var indexPathes: [IndexPath] = []
