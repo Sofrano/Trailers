@@ -5,22 +5,34 @@
 //  Created by Dmitriy Safarov on 31/03/2019.
 //  Copyright © 2019 SimpleCode. All rights reserved.
 //
+
 import Foundation
 
-class MovieWallPresenter: MovieWallModuleInput {
+// MARK: - Class
+
+class MovieWallPresenter {
     
     weak var view: MovieWallViewInput?
     var interactor: MovieWallInteractorInput?
     var router: MovieWallRouterInput?
     
+    private lazy var vmCreator: MovieWallViewModelCreator = MovieWallDefaultViewModelCreator(output: self)
     private var movieId: MovieID!
     private var movieWall: MovieWall = MovieWall()
+    
+}
+
+// MARK: - Module Input
+
+extension MovieWallPresenter: MovieWallModuleInput {
     
     func configure(with movieId: MovieID) {
         self.movieId = movieId
     }
     
 }
+
+// MARK: - View Output
 
 extension MovieWallPresenter: MovieWallViewOutput {
     
@@ -33,159 +45,62 @@ extension MovieWallPresenter: MovieWallViewOutput {
     
 }
 
-extension MovieWallPresenter: MovieWallInteractorOutput {
-    
-    func onFetchedWall(_ wall: MovieWall) {
-        self.movieWall = wall
-        let movieWallViewModel = MovieWallViewModel(headerSliderViewModel: createHeaderSliderViewModel(),
-                                                    mediaTitleViewModel: crateMediaTitleViewModel(),
-                                                    productionStatusViewModel: createProductionStatusModel(),
-                                                    mediaOverviewViewModel: createMediaOverviewViewModel(),
-                                                    imagesViewModel: createImageCollectionModel(),
-                                                    castViewModel: createCastCollectionModel(),
-                                                    videosViewModel: createVideoCollectionModel())
-        view?.update(with: movieWallViewModel)
-    }
-    
-    func onError(_ error: Error?) {
-        router?.showAlert(withMessage: error?.localizedDescription ?? R.string.localizable.errorUnknown())
-    }
-    
-    func onComplete() {
-        router?.hideLoading()
-    }
-    
-}
+// MARK: - ViewModel Output
 
-extension MovieWallPresenter {
+extension MovieWallPresenter: MovieWallViewModelOutput {
     
-    func createImageCollectionModel() -> SectionImageCollectionViewModel {
-        let imageURLs = movieWall.imageURLs ?? []
-        let imagesViewModel = SectionImageCollectionViewModel(title: R.string.localizable.images(),
-                                                              imageURLs: imageURLs)
-            .observeAction { (action) in
-                switch action {
-                case .openDetails:
-                    self.openImageGallery()
-                case .selectItem(let index):
-                    self.openPhotoSlider(with: imageURLs, currentPage: index)
-                }
-        }
-        return imagesViewModel
+    func imageGallerySeeAll() {
+        guard let images = movieWall.images else { return }
+        router?.presentImageGallery(with: images)
     }
     
-    func createCastCollectionModel() -> CastCollectionViewModel {
-        let casts = movieWall.cast?.compactMap {
-            CastCellViewModel(character: $0.character, name: $0.name)
-            } ?? []
-        let castImagesURLs = movieWall.cast?.compactMap { $0.profilePath?.url(size: EBackdropSize.w300)} ?? []
-        let castViewModel = CastCollectionViewModel(title: R.string.localizable.cast(),
-                                                    imageURLs: castImagesURLs,
-                                                    casts: casts)
-            .observeAction { (action) in
-                switch action {
-                case .openDetails:
-                    self.openCastGallery()
-                case .selectItem(let index):
-                    print("TODO: Open cast details at index \(index)")
-                }
-        }
-        return castViewModel
+    func imageGallerySelectItem(atIndex: Int) {
+        let images = movieWall.imageURLs
+        router?.presentPhotoSlider(with: images, currentPage: atIndex)
     }
     
-    func createVideoCollectionModel() -> SectionImageCollectionViewModel {
-        let videos = movieWall.videos?.results?.compactMap { URL(videoId: $0.videoId,
-                                                                 quality: .high) } ?? []
-        let videosViewModel = SectionImageCollectionViewModel(title: R.string.localizable.video(),
-                                                              imageURLs: videos)
-            .observeAction { (action) in
-                switch action {
-                case .openDetails:
-                    self.openVideoGallery()
-                case .selectItem(let index):
-                    if let videos = self.movieWall.videos?.results {
-                        self.openVideo(videos[index])
-                    }
-                }
-        }
-        return videosViewModel
+    func castsSeeAll() {
+        router?.presentCastGallery(for: movieId)
     }
     
-    func createProductionStatusModel() -> ProductionCellViewModel? {
-        var productionStatusViewModel: ProductionCellViewModel?
-        let releaseDate = Date(fromString: movieWall.movie?.releaseDate ?? "",
-                               format: .isoDate)
-        if let date = releaseDate, date.timeIntervalSince1970 > Date().timeIntervalSince1970 {
-            productionStatusViewModel = ProductionCellViewModel(title: R.string.localizable.productionStatus(),
-                                                                value: movieWall.movie?.status ?? "")
-                .observeAction({ (action) in
-                    switch action {
-                    case .setupNotification:
-                        print("TODO: Setup notification for movie")
-                    }
-                })
-        }
-        return productionStatusViewModel
+    func castsSelectItem(atIndex: Int) {
+        print("TODO")
     }
     
-    func createHeaderSliderViewModel() -> ImageCollectionViewModel {
-        let headerSliderViewModel = ImageCollectionViewModel(imageURLs: movieWall.imageURLs ?? [])
-        return headerSliderViewModel
+    func videoSeeAll() {
+        router?.presentVideoGallery(for: movieId)
     }
     
-    func createMediaOverviewViewModel() -> MediaOverviewViewModel {
-        let mediaOverviewViewModel = MediaOverviewViewModel(text: movieWall.movie?.overview ?? "",
-                                                            posterURL: movieWall.movie?.posterPath?.url(size: EPosterSize.w342),
-                                                            actionTitle: R.string.localizable.addWatchList())
-            .observeAction { (action) in
-                switch action {
-                case .openDetails:
-                    self.selectOverview(self.movieWall.movie?.overview ?? "")
-                case .watchlist:
-                    print("todo: add to watchlist")
-                }
-        }
-        return mediaOverviewViewModel
+    func videoSelectItem(atIndex: Int) {
+        guard let videoList = movieWall.videos?.results,
+            let video = videoList[safe: atIndex] else { return }
+        router?.presentVideo(video)
     }
     
-    func crateMediaTitleViewModel() -> MediaTitleViewModel {
-        let lines = [movieWall.movie?.description,
-                     movieWall.movie?.genreList].compactMap { $0 }
-        let mediaTitleViewModel = MediaTitleViewModel(title: movieWall.movie?.title ?? "",
-                                                      lines: lines)
-        return mediaTitleViewModel
+    func toggleNotification() {
+        print("TODO")
     }
     
-}
-
-extension MovieWallPresenter {
-    
-    func openVideo(_ video: DTOVideo) {
-        router?.openVideo(video)
-    }
-    
-    func selectOverview(_ overview: String) {
-        router?.openOverview(overview,
+    func overviewSeeAll() {
+        let overview = movieWall.movie?.overview ?? ""
+        router?.presentOverview(overview,
                              title: movieWall.movie?.originalTitle ?? "")
     }
     
-    func openImageGallery() {
-        if let images = movieWall.images {
-            router?.openImageGallery(with: images)
-        }
+    func toggleWatchlist() {
+        print("TODO")
     }
     
-    func openVideoGallery() {
-        router?.openVideoGallery(for: movieId)
-    }
+}
+
+// MARK: - Interactor Output
+
+extension MovieWallPresenter: MovieWallInteractorOutput {
     
-    func openCastGallery() {
-        router?.openCastGallery(for: movieId)
-    }
-    
-    func openPhotoSlider(with images: [URL], currentPage: Int) {
-        router?.openPhotoSlider(with: images,
-                                currentPage: currentPage)
+    func onFetchedWall(_ wall: MovieWall) {
+        movieWall = wall
+        let viewModel = vmCreator.createViewModel(movieWall: wall)
+        view?.update(with: viewModel)
     }
     
 }

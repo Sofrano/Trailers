@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 protocol MovieWallViewOutput {
 
     func viewIsReady()

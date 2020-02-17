@@ -12,7 +12,7 @@ import Foundation
 class MovieWall {
     var movie: DTOMovie?
     var images: [DTOPoster]?
-    var imageURLs: [URL]? {
+    var imageURLs: [URL] {
         get {
             return (images ?? [])
                 .map { $0.filePath?.url(size: EBackdropSize.w780) }

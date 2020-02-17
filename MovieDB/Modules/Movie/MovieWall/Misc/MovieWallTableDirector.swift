@@ -9,23 +9,16 @@
 import Foundation
 import TableKit
 
-class MovieWallTableDirector {
+protocol MovieWallTableDirector {
     
-    fileprivate var viewModel: MovieWallViewModel!
-    fileprivate var tableKit: TableDirector!
-    
-    public func update(with viewModel: MovieWallViewModel,
-                       tableView: UITableView) {
-        self.viewModel = viewModel
-        self.tableKit = TableDirector(tableView: tableView)
-        configureTableView()
-    }
-    
-    fileprivate func configureTableView() {}
+    func update(with viewModel: MovieWallViewModel)
     
 }
 
 class MovieWallDefaultTableDirector: MovieWallTableDirector {
+    
+    private var viewModel: MovieWallViewModel!
+    private var tableKit: TableDirector!
     
     // Used when drawing the table as header and footer views
     private lazy var transparentView: UIView = {
@@ -34,7 +27,35 @@ class MovieWallDefaultTableDirector: MovieWallTableDirector {
         return view
     }()
     
-    func createImageSection(model: SectionImageCollectionViewModel) -> TableSection {
+    init(tableView: UITableView) {
+        tableKit = TableDirector(tableView: tableView)
+    }
+    
+    public func update(with viewModel: MovieWallViewModel) {
+        self.viewModel = viewModel
+        configureTableView()
+    }
+    
+}
+
+extension MovieWallDefaultTableDirector {
+    
+    private func configureTableView() {
+        tableKit.clear()
+        let headerSliderSection = createHeaderSliderSection(model: viewModel.headerSliderViewModel)
+        addMediaTitle(to: headerSliderSection)
+        if let productionViewModel = viewModel.productionStatusViewModel {
+            addProductionStatus(to: headerSliderSection, with: productionViewModel)
+        }
+        addShortOverview(to: headerSliderSection, with: viewModel.mediaOverviewViewModel)
+        tableKit.append(section: headerSliderSection)
+        tableKit.append(section: createImageSection(model: viewModel.imagesViewModel))
+        tableKit.append(section: createCastSection(model: viewModel.castViewModel))
+        tableKit.append(section: createVideoSection(model: viewModel.videosViewModel))
+        tableKit.reload()
+    }
+    
+    private func createImageSection(model: SectionImageCollectionViewModel) -> TableSection {
         let configuration = HorizontalCollectionConfiguration()
         configuration.itemSize = CGSize(width: 200, height: 120)
         model.configuration = configuration
@@ -47,7 +68,7 @@ class MovieWallDefaultTableDirector: MovieWallTableDirector {
         return section
     }
     
-    func createVideoSection(model: SectionImageCollectionViewModel) -> TableSection {
+    private func createVideoSection(model: SectionImageCollectionViewModel) -> TableSection {
         let configuration = HorizontalCollectionConfiguration()
         configuration.itemSize = CGSize(width: 200, height: 120)
         configuration.registerCell = (class: VideoCollectionViewCell.self, identifier: "video")
@@ -60,7 +81,7 @@ class MovieWallDefaultTableDirector: MovieWallTableDirector {
         return section
     }
     
-    func createCastSection(model: CastCollectionViewModel) -> TableSection {
+    private func createCastSection(model: CastCollectionViewModel) -> TableSection {
         let configuration = HorizontalCollectionConfiguration()
         configuration.registerCell = (class: CastCollectionViewCell.self, identifier: "cast")
         configuration.configureCollectionCell = { (collectionCell, index) in
@@ -76,7 +97,7 @@ class MovieWallDefaultTableDirector: MovieWallTableDirector {
         return section
     }
     
-    func addMediaTitle(to section: TableSection) {
+    private func addMediaTitle(to section: TableSection) {
         //Add short header row
         let mediaTitleViewModel = viewModel.mediaTitleViewModel
         let configuration = ViewModelConfiguration()
@@ -97,12 +118,14 @@ class MovieWallDefaultTableDirector: MovieWallTableDirector {
          section.append(row: imageOverviewRow)*/
     }
     
-    func addProductionStatus(to section: TableSection, with model: ProductionCellViewModel) {
+    private func addProductionStatus(to section: TableSection,
+                             with model: ProductionCellViewModel) {
         let productionRow = TableRow<ProductionStatusTableViewCell>(item: model)
         section.append(row: productionRow)
     }
     
-    func addShortOverview(to section: TableSection, with model: MediaOverviewViewModel) {
+    private func addShortOverview(to section: TableSection,
+                          with model: MediaOverviewViewModel) {
         let imageOverviewRow = TableRow<MediaOverviewTableViewCell>(item: model)
             .on(.click) { _ in
                 model.invoke(action: .openDetails)
@@ -153,18 +176,5 @@ class MovieWallDefaultTableDirector: MovieWallTableDirector {
         return section
     }
     
-    fileprivate override func configureTableView() {
-        tableKit.clear()
-        let headerSliderSection = createHeaderSliderSection(model: viewModel.headerSliderViewModel)
-        addMediaTitle(to: headerSliderSection)
-        if let productionViewModel = viewModel.productionStatusViewModel {
-            addProductionStatus(to: headerSliderSection, with: productionViewModel)
-        }
-        addShortOverview(to: headerSliderSection, with: viewModel.mediaOverviewViewModel)
-        tableKit.append(section: headerSliderSection)
-        tableKit.append(section: createImageSection(model: viewModel.imagesViewModel))
-        tableKit.append(section: createCastSection(model: viewModel.castViewModel))
-        tableKit.append(section: createVideoSection(model: viewModel.videosViewModel))
-        tableKit.reload()
-    }
+    
 }

@@ -17,7 +17,7 @@ final class MovieWallRouter {
 
 extension MovieWallRouter: MovieWallRouterInput {
     
-    func openOverview(_ overview: String, title: String) {
+    func presentOverview(_ overview: String, title: String) {
         try? push(storyboard: R.storyboard.textListView(),
                   moduleInput: TextListModuleInput.self)
             .apply(to: { (viewController) in
@@ -28,7 +28,7 @@ extension MovieWallRouter: MovieWallRouterInput {
             })
     }
     
-    func openVideo(_ video: DTOVideo) {
+    func presentVideo(_ video: DTOVideo) {
         try? push(storyboard: R.storyboard.ytView(),
                   moduleInput: YTModuleInput.self)
             .then({ (moduleInput) -> Any? in
@@ -36,7 +36,7 @@ extension MovieWallRouter: MovieWallRouterInput {
             })
     }
     
-    func openImageGallery(with photos: [DTOPoster]) {
+    func presentImageGallery(with photos: [DTOPoster]) {
         try? push(storyboard: R.storyboard.imageListView(), moduleInput: ImageListModuleInput.self)
             .apply(to: { (viewController) in
                 viewController.title = "Image Gallery"
@@ -46,7 +46,7 @@ extension MovieWallRouter: MovieWallRouterInput {
             })
     }
     
-    func openVideoGallery(for movieId: MovieID) {
+    func presentVideoGallery(for movieId: MovieID) {
         try? push(storyboard: R.storyboard.videoListView(),
                   moduleInput: VideoListModuleInput.self)
             .apply(to: { (viewController) in
@@ -57,14 +57,14 @@ extension MovieWallRouter: MovieWallRouterInput {
             })
     }
     
-    func openCastGallery(for movieId: MovieID) {
+    func presentCastGallery(for movieId: MovieID) {
         try? push(storyboard: R.storyboard.castingListView(), moduleInput: CastingListModuleInput.self)
             .then({ (moduleInput) -> Any? in
                 moduleInput.configure(with: movieId)
             })
     }
     
-    func openPhotoSlider(with images: [URL], currentPage: Int) {
+    func presentPhotoSlider(with images: [URL], currentPage: Int) {
         let slider = PhotoSlider.ViewController(imageURLs: images)
         slider.currentPage = currentPage
         self.present(slider, animated: true)

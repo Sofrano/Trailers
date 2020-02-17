@@ -20,7 +20,7 @@ class MovieWallViewController: UIViewController {
     // MARK: - Variables
     
     var output: MovieWallViewOutput?
-    var tableDirector = MovieWallDefaultTableDirector()
+    private lazy var tableDirector: MovieWallTableDirector = MovieWallDefaultTableDirector(tableView: self.tableView)
     
     // MARK: - Life cycle
     
@@ -39,8 +39,7 @@ extension MovieWallViewController: MovieWallViewInput {
     }
     
     func update(with viewModel: MovieWallViewModel) {
-        tableDirector.update(with: viewModel,
-                             tableView: tableView)
+        tableDirector.update(with: viewModel)
     }
     
 }

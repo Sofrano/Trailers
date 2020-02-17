@@ -8,15 +8,8 @@
 
 import Foundation
 
-protocol MovieWallInteractorOutput: class {
+protocol MovieWallInteractorOutput: class, InteractorOutput {
 
-    func onError(_ error: Error?)
-    func onComplete()
-    /*
-    func onFetchedMovie(_ movie: DTOMovie?, error: Error?)
-    func onFetchedVideos(_ videos: DTOVideos?, error: Error?)
-    func onFetchedImages(_ images: DTOImages?, error: Error?)
-    func onFetchedCredits(_ credits: DTOCredits?, error: Error?)
-    */
     func onFetchedWall(_ wall: MovieWall)
+    
 }

@@ -12,8 +12,10 @@ import SVProgressHUD
 
 // Default functions for the interactor
 protocol InteractorOutput {
+    
     func onError(_ error: Error?)
     func onComplete()
+    
 }
 
 extension InteractorOutput {

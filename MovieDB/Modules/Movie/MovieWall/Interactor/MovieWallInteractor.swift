@@ -12,7 +12,7 @@ class MovieWallInteractor: MovieWallInteractorInput {
     weak var output: MovieWallInteractorOutput?
     let movieService = MoviesNetworkService()
     
-    // request data for a wall from different API
+    // Request data for a wall from different API
     func fetchWall(for movieId: MovieID) {
         let params = MovieDetailsParameters(movieId: movieId,
                                             propertyKeys: [.title, .budget, .genres])

@@ -9,10 +9,7 @@
 import Foundation
 
 protocol MovieWallInteractorInput {
-
-    /*func fetchMovieDetails(_ params: MovieDetailsParameters)
-    func fetchImages(for movieId: MovieID)
-    func fetchCredits(for movieId: MovieID)
-    func fetchVideos(for movieId: MovieID)*/
+    
     func fetchWall(for movieId: MovieID)
+    
 }
