@@ -992,11 +992,11 @@
 		5E16111522B7675700A1BD60 /* YTPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				5E16111622B7675700A1BD60 /* Assembly */,
-				5E16111822B7675700A1BD60 /* Presenter */,
 				5E16111B22B7675700A1BD60 /* View */,
+				5E16111822B7675700A1BD60 /* Presenter */,
 				5E16112022B7675700A1BD60 /* Interactor */,
 				5E16112422B7675700A1BD60 /* Router */,
+				5E16111622B7675700A1BD60 /* Assembly */,
 			);
 			path = YTPlayer;
 			sourceTree = "<group>";
@@ -1022,8 +1022,8 @@
 			isa = PBXGroup;
 			children = (
 				5E16111C22B7675700A1BD60 /* YTViewController.swift */,
-				5E16111D22B7675700A1BD60 /* YTViewOutput.swift */,
 				5E16111E22B7675700A1BD60 /* YTViewInput.swift */,
+				5E16111D22B7675700A1BD60 /* YTViewOutput.swift */,
 				5E16111F22B7675700A1BD60 /* YTView.storyboard */,
 			);
 			path = View;
@@ -1032,9 +1032,9 @@
 		5E16112022B7675700A1BD60 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				5E16112122B7675700A1BD60 /* YTInteractor.swift */,
 				5E16112222B7675700A1BD60 /* YTInteractorInput.swift */,
 				5E16112322B7675700A1BD60 /* YTInteractorOutput.swift */,
+				5E16112122B7675700A1BD60 /* YTInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";

@@ -8,9 +8,6 @@
 
 import Foundation
 
-protocol YTInteractorOutput: class {
-
-    func onError(_ error: Error?)
-    func onComplete()
+protocol YTInteractorOutput: class, InteractorOutput {
     
 }

@@ -6,7 +6,9 @@
 //  Copyright © 2019 SimpleCode. All rights reserved.
 //
 
-class YTPresenter: YTModuleInput {
+// MARK: - Class
+
+class YTPresenter {
 
     weak var view: YTViewInput?
     var interactor: YTInteractorInput?
@@ -14,10 +16,19 @@ class YTPresenter: YTModuleInput {
     
     private var videoId: YTVideoID?
     
+}
+
+// MARK: - Module Input
+
+extension YTPresenter: YTModuleInput {
+    
     func configure(with videoId: YTVideoID) {
         self.videoId = videoId
     }
+ 
 }
+
+// MARK: - View Output
 
 extension YTPresenter: YTViewOutput {
 
@@ -32,14 +43,6 @@ extension YTPresenter: YTViewOutput {
     
 }
 
-extension YTPresenter: YTInteractorOutput {
-    
-    func onError(_ error: Error?) {
-        router?.showAlert(withMessage: error?.localizedDescription ?? R.string.localizable.errorUnknown())
-    }
-    
-    func onComplete() {
-        router?.hideLoading()
-    }
+// MARK: - Interactor Output
 
-}
+extension YTPresenter: YTInteractorOutput {}

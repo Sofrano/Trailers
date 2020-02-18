@@ -15,7 +15,18 @@ class YTViewController: UIViewController {
     
     // MARK: - Variables
     
-    var playerView: YTPlayerView!
+    lazy var playerView: YTPlayerView = {
+        let playerView = YTPlayerView(frame: self.view.frame)
+        view.addSubview(playerView)
+        playerView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.topMargin)
+        }
+        playerView.delegate = self
+        return playerView
+    }()
+    
     var output: YTViewOutput?
 
     // MARK: - Life cycle
@@ -27,18 +38,6 @@ class YTViewController: UIViewController {
 
     // MARK: - Private functions
 
-    private func setupPlayer() {
-        playerView = YTPlayerView(frame: self.view.frame)
-        view.addSubview(playerView)
-        playerView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.topMargin)
-        }
-        playerView.delegate = self
-        self.view.addSubview(playerView)
-    }
-    
     private func setupObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(exit),
@@ -52,7 +51,6 @@ extension YTViewController: YTViewInput {
 
     func setupInitialState() {
         self.view.backgroundColor = UIColor.black
-        setupPlayer()
         setupObservers()
     }
     

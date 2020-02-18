@@ -8,10 +8,7 @@
 
 protocol YTViewOutput {
 
-    /**
-        @author Dmitriy Safarov
-        Notify presenter that view is ready
-    */
     func close()
     func viewIsReady()
+    
 }

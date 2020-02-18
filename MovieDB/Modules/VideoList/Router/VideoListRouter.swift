@@ -16,7 +16,7 @@ final class VideoListRouter {
 
 extension VideoListRouter: VideoListRouterInput {
 
-    func openVideo(_ video: DTOVideo) {
+    func presentVideo(_ video: DTOVideo) {
         try? push(storyboard: R.storyboard.ytView(),
                   moduleInput: YTModuleInput.self)
             .then({ (moduleInput) -> Any? in

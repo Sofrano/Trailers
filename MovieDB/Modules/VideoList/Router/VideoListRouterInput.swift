@@ -10,6 +10,6 @@ import Foundation
 
 protocol VideoListRouterInput: AlertRoutable, LoadingRoutable, PresentRoutable {
 
-    func openVideo(_ video: DTOVideo)
+    func presentVideo(_ video: DTOVideo)
     
 }

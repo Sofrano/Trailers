@@ -46,7 +46,7 @@ extension VideoListPresenter: VideoListViewOutput {
 extension VideoListPresenter: VideoListViewModelOutput {
    
     func selectVideo(_ video: DTOVideo) {
-        router?.openVideo(video)
+        router?.presentVideo(video)
     }
 
 }

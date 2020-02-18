@@ -10,4 +10,5 @@ protocol YTViewInput: class {
 
     func setupInitialState()
     func playVideo(id: String)
+    
 }
