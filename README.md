@@ -1,5 +1,9 @@
 ## Trailers
 https://www.themoviedb.org/ Swift VIPER demo application
+Main technology stack:
+Architecture: Viper
+Network: Moya, PromiseKit
+Database: RealmSwift
 
 ![](gif/1.gif)
 ![](gif/2.gif)
