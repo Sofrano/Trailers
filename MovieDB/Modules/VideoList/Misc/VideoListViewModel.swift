@@ -9,5 +9,7 @@
 import Foundation
 
 class VideoListViewModel {
+    
     var listViewModel: [YTPlayerCellViewModel] = []
+    
 }

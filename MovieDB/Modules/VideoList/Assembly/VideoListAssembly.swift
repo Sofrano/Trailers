@@ -12,7 +12,6 @@ import SwinjectStoryboard
 class VideoListAssemblyContainer: Assembly {
 
     func assemble(container: Container) {
-
         container.register(VideoListInteractor.self) { (_, presenter: VideoListPresenter) in
             let interactor = VideoListInteractor()
             interactor.output = presenter

@@ -22,7 +22,6 @@ extension VideoListRouter: VideoListRouterInput {
             .then({ (moduleInput) -> Any? in
                 moduleInput.configure(with: video.key ?? "")
             })
-        
     }
     
 }

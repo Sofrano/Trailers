@@ -9,4 +9,5 @@
 protocol VideoListModuleInput: class {
 
     func configure(with movieId: MovieID)
+    
 }

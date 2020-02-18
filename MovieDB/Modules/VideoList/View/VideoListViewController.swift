@@ -18,7 +18,7 @@ class VideoListViewController: UIViewController {
     
     // MARK: - Variables
     
-    private var tableDirector = VideoListDefaultTableDirector()
+    private lazy var tableDirector: VideoListTableDirector = VideoListDefaultTableDirector(tableView: self.tableView)
     var output: VideoListViewOutput?
 
     // MARK: - Life cycle
@@ -37,21 +37,7 @@ extension VideoListViewController: VideoListViewInput {
     }
 
     func update(with viewModel: VideoListViewModel) {
-        tableDirector.update(with: viewModel, tableView: tableView)
-    }
-    
-    func update(with videos: [DTOVideo]) {
-        /*tableKit.clear()
-        let section = TableSection(rows: [])
-        videos.forEach { (video) in
-            let row = TableRow<YTPlayerTableViewCell>(item: video)
-                .on(.click) { _ in
-                    self.output?.openVideo(video)
-            }
-            section.append(row: row)
-        }
-        tableKit.append(section: section)
-        tableKit.reload()*/
+        tableDirector.update(with: viewModel)
     }
     
 }

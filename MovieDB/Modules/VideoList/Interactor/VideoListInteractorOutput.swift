@@ -8,9 +8,8 @@
 
 import Foundation
 
-protocol VideoListInteractorOutput: class {
+protocol VideoListInteractorOutput: class, InteractorOutput {
 
-    func onError(_ error: Error?)
-    func onComplete()
     func onFetchedVideos(_ videos: [DTOVideo])
+    
 }

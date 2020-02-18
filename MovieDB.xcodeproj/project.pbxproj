@@ -211,6 +211,7 @@
 		5E92D301226DA86D004A99E6 /* StringResource+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E92D300226DA86D004A99E6 /* StringResource+Ext.swift */; };
 		5E977ECD226E3CD100A38F40 /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E977ECC226E3CD100A38F40 /* NetworkTests.swift */; };
 		5EA8C62F22B0643F00D25FA1 /* Collection+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA8C62E22B0643F00D25FA1 /* Collection+Ext.swift */; };
+		5EBF93D623FB9AA700D871CA /* VideoListViewModelCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF93D523FB9AA700D871CA /* VideoListViewModelCreator.swift */; };
 		5EE785031A592D35C5E3FAE6 /* HorizontalCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F3141317971B4498A39B67 /* HorizontalCollectionTableViewCell.swift */; };
 		5EF0340922561B2500ADD63D /* YTImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF0340822561B2500ADD63D /* YTImageView.swift */; };
 		5EF28539228D5E8700E99439 /* HorizontalCollectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF28538228D5E8700E99439 /* HorizontalCollectionConfiguration.swift */; };
@@ -494,6 +495,7 @@
 		5E977EC5226DC41E00A38F40 /* libswiftCoreMedia.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswiftCoreMedia.dylib; path = ../../../../Downloads/libswiftCoreMedia.dylib; sourceTree = "<group>"; };
 		5E977ECC226E3CD100A38F40 /* NetworkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
 		5EA8C62E22B0643F00D25FA1 /* Collection+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Ext.swift"; sourceTree = "<group>"; };
+		5EBF93D523FB9AA700D871CA /* VideoListViewModelCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListViewModelCreator.swift; sourceTree = "<group>"; };
 		5EF0340822561B2500ADD63D /* YTImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTImageView.swift; sourceTree = "<group>"; };
 		5EF28538228D5E8700E99439 /* HorizontalCollectionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCollectionConfiguration.swift; sourceTree = "<group>"; };
 		5EF2853A228D5EF600E99439 /* ViewModelConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConfiguration.swift; sourceTree = "<group>"; };
@@ -1214,12 +1216,12 @@
 		5E16115522B7675700A1BD60 /* VideoList */ = {
 			isa = PBXGroup;
 			children = (
-				5E16115622B7675700A1BD60 /* Misc */,
-				5E16115922B7675700A1BD60 /* Assembly */,
-				5E16115B22B7675700A1BD60 /* Presenter */,
 				5E16115E22B7675700A1BD60 /* View */,
+				5E16115B22B7675700A1BD60 /* Presenter */,
 				5E16116322B7675700A1BD60 /* Interactor */,
 				5E16116722B7675700A1BD60 /* Router */,
+				5E16115922B7675700A1BD60 /* Assembly */,
+				5E16115622B7675700A1BD60 /* Misc */,
 			);
 			path = VideoList;
 			sourceTree = "<group>";
@@ -1229,6 +1231,7 @@
 			children = (
 				5E16115722B7675700A1BD60 /* VideoListViewModel.swift */,
 				5E16115822B7675700A1BD60 /* VideoListTableDirector.swift */,
+				5EBF93D523FB9AA700D871CA /* VideoListViewModelCreator.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -1253,10 +1256,10 @@
 		5E16115E22B7675700A1BD60 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5E16115F22B7675700A1BD60 /* VideoListViewInput.swift */,
-				5E16116022B7675700A1BD60 /* VideoListView.storyboard */,
-				5E16116122B7675700A1BD60 /* VideoListViewOutput.swift */,
 				5E16116222B7675700A1BD60 /* VideoListViewController.swift */,
+				5E16115F22B7675700A1BD60 /* VideoListViewInput.swift */,
+				5E16116122B7675700A1BD60 /* VideoListViewOutput.swift */,
+				5E16116022B7675700A1BD60 /* VideoListView.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1265,8 +1268,8 @@
 			isa = PBXGroup;
 			children = (
 				5E16116422B7675700A1BD60 /* VideoListInteractorInput.swift */,
-				5E16116522B7675700A1BD60 /* VideoListInteractor.swift */,
 				5E16116622B7675700A1BD60 /* VideoListInteractorOutput.swift */,
+				5E16116522B7675700A1BD60 /* VideoListInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -2144,6 +2147,7 @@
 				5E16119422B7675700A1BD60 /* TextListInteractorOutput.swift in Sources */,
 				83ACA4B7E430C53C0539A0F8 /* LanguageTableViewCell.swift in Sources */,
 				5E45782F23F58BD300F6AAFD /* UIApplication+Ext.swift in Sources */,
+				5EBF93D623FB9AA700D871CA /* VideoListViewModelCreator.swift in Sources */,
 				5E1611A122B7675700A1BD60 /* LanguageInteractor.swift in Sources */,
 				5E1611E822B7675700A1BD60 /* MovieWallRouter.swift in Sources */,
 				5EF0340922561B2500ADD63D /* YTImageView.swift in Sources */,

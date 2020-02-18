@@ -6,13 +6,32 @@
 //  Copyright © 2019 SimpleCode. All rights reserved.
 //
 
-class VideoListPresenter: VideoListModuleInput {
+// MARK: - Class
+
+class VideoListPresenter  {
 
     weak var view: VideoListViewInput?
     var interactor: VideoListInteractorInput?
     var router: VideoListRouterInput?
 
+    private lazy var vmCreator: VideoListViewModelCreator = VideoListDefaultViewModelCreator(output: self)
     private var movieId: MovieID?
+    
+}
+
+// MARK: - Module Input
+
+extension VideoListPresenter: VideoListModuleInput {
+    
+    func configure(with movieId: MovieID) {
+        self.movieId = movieId
+    }
+    
+}
+
+// MARK: - View Output
+
+extension VideoListPresenter: VideoListViewOutput {
     
     func viewIsReady() {
         view?.setupInitialState()
@@ -20,49 +39,25 @@ class VideoListPresenter: VideoListModuleInput {
         interactor?.fetchVideos(for: movieId ?? 0)
     }
     
-    func configure(with movieId: MovieID) {
-        self.movieId = movieId
-    }
-    
-    func openVideo(_ video: DTOVideo) {
+}
+
+// MARK: - ViewModel Output
+
+extension VideoListPresenter: VideoListViewModelOutput {
+   
+    func selectVideo(_ video: DTOVideo) {
         router?.openVideo(video)
     }
-    
-    func createViewModel(_ videos: [DTOVideo]) -> VideoListViewModel {
-        let viewModel = VideoListViewModel()
-        videos.forEach { (video) in
-            let playerViewModel = YTPlayerCellViewModel(videoId: video.videoId,
-                                                  name: video.name ?? "")
-                .observeAction({ (action) in
-                    switch action {
-                    case .click:
-                        self.router?.openVideo(video)
-                    }
-                })
-            viewModel.listViewModel.append(playerViewModel)
-        }
-        return viewModel
-    }
-    
-}
-
-extension VideoListPresenter: VideoListViewOutput {
 
 }
+
+// MARK: - Interactor Output
 
 extension VideoListPresenter: VideoListInteractorOutput {
     
     func onFetchedVideos(_ videos: [DTOVideo]) {
-        let viewModel = createViewModel(videos)
+        let viewModel = vmCreator.createViewModel(videos)
         view?.update(with: viewModel)
-    }
-    
-    func onError(_ error: Error?) {
-        router?.showAlert(withMessage: error?.localizedDescription ?? R.string.localizable.errorUnknown())
-    }
-    
-    func onComplete() {
-        router?.hideLoading()
     }
 
 }

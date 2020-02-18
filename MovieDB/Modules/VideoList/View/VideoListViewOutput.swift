@@ -8,9 +8,6 @@
 
 protocol VideoListViewOutput {
 
-    /**
-        @author Dmitriy Safarov
-        Notify presenter that view is ready
-    */
     func viewIsReady()
+    
 }

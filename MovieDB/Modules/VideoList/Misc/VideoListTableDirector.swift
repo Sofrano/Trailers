@@ -9,27 +9,31 @@
 import Foundation
 import TableKit
 
-class VideoListTableDirector {
+protocol VideoListTableDirector {
     
-    fileprivate var viewModel: VideoListViewModel!
-    fileprivate var tableKit: TableDirector!
-    
-    public func update(with viewModel: VideoListViewModel,
-                       tableView: UITableView) {
-        self.viewModel = viewModel
-        if tableKit == nil {
-            self.tableKit = TableDirector(tableView: tableView)
-        }
-        configureTableView()
-    }
-    
-    fileprivate func configureTableView() {}
+    func update(with viewModel: VideoListViewModel)
     
 }
 
 class VideoListDefaultTableDirector: VideoListTableDirector {
     
-    fileprivate override func configureTableView() {
+    private var viewModel: VideoListViewModel!
+    private var tableKit: TableDirector!
+    
+    init(tableView: UITableView) {
+        tableKit = TableDirector(tableView: tableView)
+    }
+    
+    public func update(with viewModel: VideoListViewModel) {
+        self.viewModel = viewModel
+        updateTableView()
+    }
+    
+}
+
+extension VideoListDefaultTableDirector {
+    
+    private func updateTableView() {
         tableKit.clear()
         let section = TableSection(rows: [])
         viewModel.listViewModel.forEach { (ytViewModel) in
@@ -42,4 +46,5 @@ class VideoListDefaultTableDirector: VideoListTableDirector {
         tableKit.append(section: section)
         tableKit.reload()
     }
+    
 }
