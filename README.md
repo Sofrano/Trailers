@@ -1,4 +1,4 @@
-## Trailers
+## MovieDB Trailers
 https://www.themoviedb.org/ Swift VIPER demo application
 
 ## Main technology stack:
